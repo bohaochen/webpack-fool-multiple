@@ -19,4 +19,4 @@ npm run build:stg
 prod打包
 npm run build:prod
 
-本地预览：localhost:8848/helloWorld.html
+本地预览：http://localhost:8848/helloWorld.html

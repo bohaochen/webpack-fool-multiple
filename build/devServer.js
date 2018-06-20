@@ -15,6 +15,15 @@ const server = new webpackDevServer(compiler, {
   stats: {
     colors: true // 用颜色标识
   },
+  proxy:{
+    "/api": {
+      target: "http://appapi.dadi01.net",
+      changeOrigin: true,
+      pathRewrite: {
+        '^/api': ''
+        }
+    }
+  }
 });
 
 let prot = 8848;

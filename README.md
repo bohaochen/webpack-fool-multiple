@@ -10,6 +10,11 @@
 index.html（模板HTML）
 index.js(此项目入口)
 
+###如何使用
+
+npm install 
+
+
 dev命令：
 npm run start
 
@@ -19,4 +24,4 @@ npm run build:stg
 prod打包
 npm run build:prod
 
-本地预览：http://localhost:8848/helloWorld.html
+本地预览：localhost:8848/helloWorld.html

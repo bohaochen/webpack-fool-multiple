@@ -20,4 +20,7 @@ config.plugins.push(new webpack.DefinePlugin({
   NODE_ENV: JSON.stringify(envName)
 }));
 
+// config.plugins.push(new webpack.HotModuleReplacementPlugin());
+
+
 module.exports = config;

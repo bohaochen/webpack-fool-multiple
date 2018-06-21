@@ -10,8 +10,8 @@ const server = new webpackDevServer(compiler, {
   contentBase: path.join(__dirname, "../dist"),
   host: 'localhost',
   compress: true,
+  // hot:true,
   inline: true,
-  hot:true,
   stats: {
     colors: true // 用颜色标识
   },

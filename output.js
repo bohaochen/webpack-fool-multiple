@@ -13,7 +13,7 @@ function each_entry_file(dir) {
     fs.readdirSync(dir).forEach(function (file) {
       let file_path = dir + '/' + file;
       let fname = path.basename(file_path, '.js');
-      entry_files[fname] = file_path+'/index.js';
+      entry_files[fname] = [(file_path+'/index.js')];
     })
   } catch (e) {
 

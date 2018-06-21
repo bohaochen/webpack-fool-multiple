@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { HashRouter as Router, Route, Link } from "react-router-dom";
+import './assets/css/index.scss';
 import API from "./api/api";
 import Axios from "axios";
 import loadable from "react-loadable";
@@ -14,7 +15,7 @@ const loadingComponent = ({ isLoading, error }) => {
   }
   // Handle the error state
   else if (error) {
-    return <div>Sorry, there was a problem loading the page.</div>;
+    return <div>Sorry, there was a problem loading the page.1www1</div>;
   } else {
     return null;
   }
@@ -33,16 +34,8 @@ class APP extends React.Component {
   render() {
     return (
       <Router>
-        <div>
-          <ul className="nav navbar-nav">
-            <li>
-              <Link to="/page/51">详情页</Link>
-            </li>
-            <li>
-              <Link to="/classifiedDisplay">分类展示</Link>
-            </li>
-          </ul>
-          <Route path="/page" component={ABB} />
+        <div>1111122222211
+          <Route path="/:id" component={ABB} />
         </div>
       </Router>
     );
@@ -73,3 +66,13 @@ const requestFn = () => {
 };
 
 ReactDOM.render(<APP />, document.getElementById("app"));
+
+
+if (module.hot) {
+  alert(1)
+  module.hot.accept('/',() => {
+    console.log('Accepting the updated printMe module!');
+    console.log('121111111111222221111111111111');
+    ReactDOM.render(<APP />, document.getElementById("app"));
+  })
+}

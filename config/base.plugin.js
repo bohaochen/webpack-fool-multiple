@@ -1,9 +1,7 @@
 const webpack = require('webpack');
 const path = require('path');
 
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 const ROOT_PATH = path.resolve(__dirname);
@@ -15,21 +13,6 @@ let base_plugin = [
     verbose: true,
     dry: false,
   }),
-  new webpack.optimize.CommonsChunkPlugin({
-    name: "vendors",
-    chunks: ["pageA", "pageB", "pageC"],//提取公用模块
-    minChunks: Infinity
-  }),
-  /*js压缩*/
-  new UglifyJsPlugin({
-    sourceMap: true
-  }),
-  new ExtractTextPlugin({
-    //生成css文件名
-    filename: 'static/css/[name][hash].css',
-    disable: false,
-    allChunks: true
-  })
 ]
 /*遍历页面，添加配置*/
 pagesArray.forEach((page) => {

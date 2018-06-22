@@ -1,5 +1,5 @@
 const webpack = require("webpack"); //
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 // const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin"); // 通过 npm 安装
@@ -29,33 +29,34 @@ module.exports = {
         test: /\.js$/,
         exclude: /node_modules/,
         loader: "babel-loader",
-        include: [
-          path.join(process.cwd(), './src'),
-        ],
+        include: [path.join(process.cwd(), "./src")]
       },
       {
         test: /\.css$/,
         // exclude: /node_modules/,
-        use: [MiniCssExtractPlugin.loader, 'css-loader',{
-          loader: "postcss-loader",
-          options: {
-            config: {
-              path: ".postcssrc.js"
+        use: [
+          MiniCssExtractPlugin.loader,
+          "css-loader",
+          {
+            loader: "postcss-loader",
+            options: {
+              config: {
+                path: ".postcssrc.js"
+              }
             }
           }
-        }],
+        ]
       },
       {
-        test: /\.scss$/,
-        exclude: /node_modules/,
-        use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader', {
+        test: /\.less$/,
+        use: ["style-loader", "css-loader",{
           loader: "postcss-loader",
           options: {
             config: {
               path: ".postcssrc.js"
             }
           }
-        }],
+        }, "less-loader"]
       },
       {
         test: /\.html$/,
@@ -79,10 +80,11 @@ module.exports = {
       }
     ]
   },
-  plugins: [...base_plugin,
+  plugins: [
+    ...base_plugin,
     new MiniCssExtractPlugin({
-      filename: 'css/[name]-[contenthash:8].css',
-      chunkFilename: 'css/[id]-[contenthash:8].css',
-    }),
+      filename: "css/[name]-[contenthash:8].css",
+      chunkFilename: "css/[id]-[contenthash:8].css"
+    })
   ]
 };

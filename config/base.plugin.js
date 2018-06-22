@@ -9,7 +9,7 @@ const ROOT_PATH = path.resolve(__dirname);
 //html页面 pagesArray
 let pagesArray = require('./htmlPages');
 let base_plugin = [
-  new CleanWebpackPlugin(['../dist'], {
+  new CleanWebpackPlugin(['dist'], {
     verbose: true,
     dry: false,
   }),

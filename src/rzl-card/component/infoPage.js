@@ -2,6 +2,8 @@ import React from "react";
 import { Route } from "react-router-dom";
 import { Carousel, WingBlank } from "antd-mobile";
 
+import {GetCardInfo} from '../api/apiFn';
+
 import ABBaa from "./test";
 
 export default class InfoPage extends React.Component {
@@ -10,16 +12,18 @@ export default class InfoPage extends React.Component {
   }
 
   state = {
-    data: ["1", "2", "3"],
+    data: [],
     imgHeight: 176
   };
+
+
 
   componentWillReceiveProps(nextProps) {
     console.log(nextProps);
   }
 
   componentDidMount() {
-    console.log(this.props.match);
+    GetCardInfo(1,1,51)
     setTimeout(() => {
       this.setState({
         data: [
@@ -33,7 +37,8 @@ export default class InfoPage extends React.Component {
 
   render() {
     return (
-      <div className="card-page">
+      <div className="card-page">  
+       <span style={{fontSize:"16px"}}>我是16px</span>
         <Route path={`${this.props.match.url}/:topicId`} component={ABBaa} />
         <WingBlank>
           <Carousel

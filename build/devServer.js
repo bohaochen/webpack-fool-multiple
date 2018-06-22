@@ -38,5 +38,5 @@ const compiler = webpack(config);
 const server = new webpackDevServer(compiler, options);
 
 let prot = 8848;
-opn("http://127.0.0.1:" + prot + "/helloWorld.html");
+opn("http://127.0.0.1:" + prot + "/html_model.html");
 server.listen(prot);

@@ -1,8 +1,23 @@
 module.exports=[
     {
-        "filename": "helloWorld.html",
-        "template": "./src/helloWorld/index.html",
-        "chuckName": "helloWorld"
+        "filename": "commodity.html",
+        "template": "./src/commodity/index.html",
+        "chuckName": "commodity"
+    },
+    {
+        "filename": "commodity-ordain.html",
+        "template": "./src/commodity-ordain/index.html",
+        "chuckName": "commodity-ordain"
+    },
+    {
+        "filename": "group-activity.html",
+        "template": "./src/group-activity/index.html",
+        "chuckName": "group-activity"
+    },
+    {
+        "filename": "group-commodity.html",
+        "template": "./src/group-commodity/index.html",
+        "chuckName": "group-commodity"
     },
     {
         "filename": "html_model.html",
@@ -10,13 +25,13 @@ module.exports=[
         "chuckName": "html_model"
     },
     {
-        "filename": "rzl-activity.html",
-        "template": "./src/rzl-activity/index.html",
-        "chuckName": "rzl-activity"
+        "filename": "invite.html",
+        "template": "./src/invite/index.html",
+        "chuckName": "invite"
     },
     {
-        "filename": "rzl-card.html",
-        "template": "./src/rzl-card/index.html",
-        "chuckName": "rzl-card"
+        "filename": "my-recommend.html",
+        "template": "./src/my-recommend/index.html",
+        "chuckName": "my-recommend"
     }
 ]

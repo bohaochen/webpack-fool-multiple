@@ -1,7 +1,7 @@
 
 console.log("编译环境:",NODE_ENV)
 const URL = {
-    dev:"//:127.0.0.1:8848/api",
+    dev:"/api",
     prod:"www.jd.com"
 }
 const APIURL = NODE_ENV=="development"?URL.dev:URL.prod;

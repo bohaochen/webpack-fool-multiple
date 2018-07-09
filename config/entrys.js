@@ -1,23 +1,26 @@
 module.exports={
-    "commodity": [
-        "./src/commodity/index.js"
+    "getGoodsDetail": [
+        "./src/getGoodsDetail/index.js"
     ],
-    "commodity-ordain": [
-        "./src/commodity-ordain/index.js"
+    "getGrouponDetail": [
+        "./src/getGrouponDetail/index.js"
     ],
-    "group-activity": [
-        "./src/group-activity/index.js"
+    "getGrouponOpenDetail": [
+        "./src/getGrouponOpenDetail/index.js"
     ],
-    "group-commodity": [
-        "./src/group-commodity/index.js"
+    "getPostDetail": [
+        "./src/getPostDetail/index.js"
+    ],
+    "getReserve": [
+        "./src/getReserve/index.js"
+    ],
+    "getUserEnshrineList": [
+        "./src/getUserEnshrineList/index.js"
     ],
     "html_model": [
         "./src/html_model/index.js"
     ],
-    "invite": [
-        "./src/invite/index.js"
-    ],
-    "my-recommend": [
-        "./src/my-recommend/index.js"
+    "regUser": [
+        "./src/regUser/index.js"
     ]
 }

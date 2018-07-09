@@ -23,7 +23,7 @@ let options = {
   },
   proxy: {
     "/api": {
-      target: "http://appapi.dadi01.net",
+      target: "http://121.196.198.59:8086",
       changeOrigin: true,
       pathRewrite: {
         "^/api": ""

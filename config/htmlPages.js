@@ -1,23 +1,33 @@
 module.exports=[
     {
-        "filename": "commodity.html",
-        "template": "./src/commodity/index.html",
-        "chuckName": "commodity"
+        "filename": "getGoodsDetail.html",
+        "template": "./src/getGoodsDetail/index.html",
+        "chuckName": "getGoodsDetail"
     },
     {
-        "filename": "commodity-ordain.html",
-        "template": "./src/commodity-ordain/index.html",
-        "chuckName": "commodity-ordain"
+        "filename": "getGrouponDetail.html",
+        "template": "./src/getGrouponDetail/index.html",
+        "chuckName": "getGrouponDetail"
     },
     {
-        "filename": "group-activity.html",
-        "template": "./src/group-activity/index.html",
-        "chuckName": "group-activity"
+        "filename": "getGrouponOpenDetail.html",
+        "template": "./src/getGrouponOpenDetail/index.html",
+        "chuckName": "getGrouponOpenDetail"
     },
     {
-        "filename": "group-commodity.html",
-        "template": "./src/group-commodity/index.html",
-        "chuckName": "group-commodity"
+        "filename": "getPostDetail.html",
+        "template": "./src/getPostDetail/index.html",
+        "chuckName": "getPostDetail"
+    },
+    {
+        "filename": "getReserve.html",
+        "template": "./src/getReserve/index.html",
+        "chuckName": "getReserve"
+    },
+    {
+        "filename": "getUserEnshrineList.html",
+        "template": "./src/getUserEnshrineList/index.html",
+        "chuckName": "getUserEnshrineList"
     },
     {
         "filename": "html_model.html",
@@ -25,13 +35,8 @@ module.exports=[
         "chuckName": "html_model"
     },
     {
-        "filename": "invite.html",
-        "template": "./src/invite/index.html",
-        "chuckName": "invite"
-    },
-    {
-        "filename": "my-recommend.html",
-        "template": "./src/my-recommend/index.html",
-        "chuckName": "my-recommend"
+        "filename": "regUser.html",
+        "template": "./src/regUser/index.html",
+        "chuckName": "regUser"
     }
 ]

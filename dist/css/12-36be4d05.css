@@ -1,0 +1,51 @@
+.am-wingblank {
+  margin-left: 0.213333rem;
+  margin-right: 0.213333rem;
+}
+
+.am-wingblank.am-wingblank-sm {
+  margin-left: 0.133333rem;
+  margin-right: 0.133333rem;
+}
+
+.am-wingblank.am-wingblank-md {
+  margin-left: 0.213333rem;
+  margin-right: 0.213333rem;
+}
+
+.am-wingblank.am-wingblank-lg {
+  margin-left: 0.4rem;
+  margin-right: 0.4rem;
+}
+.am-carousel {
+  position: relative;
+}
+
+.am-carousel-wrap {
+  font-size: 0.48rem;
+  color: #000;
+  background: none;
+  text-align: center;
+  zoom: 1;
+  width: 100%;
+}
+
+.am-carousel-wrap-dot {
+  display: inline-block;
+  zoom: 1;
+}
+
+.am-carousel-wrap-dot > span {
+  display: block;
+  width: 0.213333rem;
+  height: 0.213333rem;
+  margin: 0 0.08rem;
+  border-radius: 50%;
+  background: #ccc;
+}
+
+.am-carousel-wrap-dot-active > span {
+  background: #888;
+}
+
+/*# sourceMappingURL=12-36be4d05.css.map*/

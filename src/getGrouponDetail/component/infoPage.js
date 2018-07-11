@@ -37,7 +37,7 @@ export default class InfoPage extends React.Component {
   }
 
   openFn = () => {
-    open(path, getParams)
+    open(path, getParams,this)
   }
 
   componentWillReceiveProps(nextProps) {

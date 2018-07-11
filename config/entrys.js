@@ -11,8 +11,8 @@ module.exports={
     "getPostDetail": [
         "./src/getPostDetail/index.js"
     ],
-    "getReserve": [
-        "./src/getReserve/index.js"
+    "getReserveGoodsDetail": [
+        "./src/getReserveGoodsDetail/index.js"
     ],
     "getUserEnshrineList": [
         "./src/getUserEnshrineList/index.js"

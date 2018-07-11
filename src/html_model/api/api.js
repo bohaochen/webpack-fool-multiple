@@ -4,7 +4,7 @@ const URL = {
     dev:"/api",
     prod:"www.jd.com"
 }
-const APIURL = NODE_ENV=="development"?URL.dev:URL.prod;
+const APIURL = NODE_ENV=="development"?URL.dev:URL.prod;const IMGURL = NODE_ENV=="development"?URL.devImgPathUrl:URL.devImgPathUrl;
 console.log("接口地址：",APIURL)
 
 const API = {

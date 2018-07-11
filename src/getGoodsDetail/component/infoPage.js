@@ -1,5 +1,5 @@
 import React from "react";
-import { Carousel, WingBlank, Icon, Button } from "antd-mobile";
+import { Carousel, WingBlank, Icon, Button} from "antd-mobile";
 import { GetCardInfo } from '../api/apiFn';
 import API from '../api/api';
 import open from '../api/open';
@@ -151,7 +151,7 @@ export default class InfoPage extends React.Component {
         </div>
         <div className="pageFoot">
           <div className={this.state.data.statusCode == 1 ?  "redBtn":"cantClickBtn"}>
-            <Button onClick={open.bind(this,path,getParams)}  type="primary" disabled={this.state.data.statusCode == 1 ?false: true } className="btncss">加入购物车</Button>
+            <Button onClick={open.bind(this,path,getParams,this)}  type="primary" disabled={this.state.data.statusCode == 1 ?false: true } className="btncss">加入购物车</Button>
           </div>
         </div>
         <div className="toastBox" style={{display:this.state.data.statusCode == 2?"block":"none"}}>

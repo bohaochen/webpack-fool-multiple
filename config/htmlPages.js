@@ -20,9 +20,9 @@ module.exports=[
         "chuckName": "getPostDetail"
     },
     {
-        "filename": "getReserve.html",
-        "template": "./src/getReserve/index.html",
-        "chuckName": "getReserve"
+        "filename": "getReserveGoodsDetail.html",
+        "template": "./src/getReserveGoodsDetail/index.html",
+        "chuckName": "getReserveGoodsDetail"
     },
     {
         "filename": "getUserEnshrineList.html",

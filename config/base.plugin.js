@@ -9,7 +9,8 @@ const ROOT_PATH = path.resolve(__dirname);
 //html页面 pagesArray
 let pagesArray = require('./htmlPages');
 let base_plugin = [
-  new CleanWebpackPlugin(['dist'], {
+  new CleanWebpackPlugin([ path.resolve(__dirname,'../dist')], {
+    root: path.resolve(__dirname, '../'),    
     verbose: true,
     dry: false,
   }),

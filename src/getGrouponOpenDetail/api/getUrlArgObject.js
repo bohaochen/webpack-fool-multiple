@@ -1,6 +1,6 @@
 function getUrlArgObject(){  
     var args=new Object();  
-    var query=location.search.substring(1);//获取查询串 
+    var query=location.search.substring(1);query=decodeURI(query)//获取查询串 
     var pairs=query.split("&");//在逗号处断开  
     for(var i=0;i<pairs.length;i++){  
         var pos=pairs[i].indexOf('=');//查找name=value  

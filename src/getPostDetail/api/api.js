@@ -2,9 +2,9 @@
 console.log("编译环境:",NODE_ENV)
 const URL = {
     dev:"/api",
-    prod:"http://121.196.198.59:8086"
+    prod:"/api",devImgPathUrl:"//jimigooss.suermen.com/",prodImgPath:"//joss.jimigo.com.cn/"
 }
-const APIURL = NODE_ENV=="development"?URL.dev:URL.prod;
+const APIURL = NODE_ENV=="development"?URL.dev:URL.prod;const IMGURL = NODE_ENV=="development"?URL.devImgPathUrl:URL.devImgPathUrl;
 console.log("接口地址：",APIURL)
 
 function getNowFormatDate() {

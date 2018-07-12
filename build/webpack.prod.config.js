@@ -21,9 +21,9 @@ config.plugins.push(new webpack.DefinePlugin({
   NODE_ENV: JSON.stringify(envName)
 }));//暴露环境变量到项目中
 
-config.devtool = 'cheap-module-source-map'; // 慢速，查错时用
+// config.devtool = 'cheap-module-source-map'; // 慢速，查错时用
 
-config.output.publicPath = "www.baidu.com/cdn/assets/"
+config.output.publicPath = ""
 
 module.exports = config;
 

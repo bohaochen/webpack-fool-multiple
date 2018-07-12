@@ -23,7 +23,7 @@ let options = {
   },
   proxy: {
     "/api": {
-      target: "http://121.196.198.59:8086",
+      target: "http://jimigoapi.suermen.com",
       changeOrigin: true,
       pathRewrite: {
         "^/api": ""

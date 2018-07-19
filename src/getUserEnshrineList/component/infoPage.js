@@ -1,7 +1,7 @@
 import React from "react";
 import { Route } from "react-router-dom";
 import { Carousel,PullToRefresh, WingBlank,Toast, Button } from "antd-mobile";
-import { getUserEnshrineList, GetMyInfo } from '../api/apiFn';
+import { getUserEnshrineList, GetMyInfo,GetWxConfig } from '../api/apiFn';
 import API from '../api/api';
 import getUrlArgObject from '../api/getUrlArgObject';
 const getParams = getUrlArgObject();
@@ -54,6 +54,51 @@ export default class InfoPage extends React.Component {
   }
 
   componentDidMount() {
+    const debug = NODE_ENV == "development" ? 0 : 1;
+    var data = GetWxConfig(debug, function (data) {
+      console.log(data)
+      wx.config({
+        debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来
+        appId: data.returnValue.appId, // 必填，公众号的唯一标识
+        timestamp: data.returnValue.timestamp, // 必填，生成签名的时间戳
+        nonceStr: data.returnValue.nonceStr, // 必填，生成签名的随机串
+        signature: data.returnValue.signature,// 必填，签名，见附录1
+        jsApiList: data.returnValue.jsApiList
+      });
+      wx.ready(function () {
+        // config信息验证后会执行ready方法，所有接口调用都必须在config接口获得结果之后，config是一个客户端的异步操作，所以如果需要在页面加载时就调用相关接口，
+        //则须把相关接口放在ready函数中调用来确保正确执行。对于用户触发时才调用的接口，则可以直接调用，不需要放在ready函数中。
+        wx.onMenuShareTimeline({
+          title: getParams.nickName+':我在Jimigo里发现了一些优质商品。',
+          link: window.location.href,
+          imgUrl: "http://jm.jimigo.com.cn/app/jimigo-logo.png",
+          success: function () {
+            console.log("分享成功")
+          },
+          cancel: function () {
+            console.log("分享失败")
+          }
+        });
+  
+        //转发给朋友
+        wx.onMenuShareAppMessage({
+          title: getParams.nickName+':我在Jimigo里发现了一些优质商品。',
+          desc: '进来看看吧~',
+          link: window.location.href,
+          imgUrl: "http://jm.jimigo.com.cn/app/jimigo-logo.png",
+          type: 'link',
+          dataUrl: '',
+          success: function () {
+            console.log("分享成功")
+          },
+          cancel: function () {
+            console.log("分享失败")
+          }
+        });
+      });
+
+      
+    })
 
   }
 
@@ -64,7 +109,7 @@ export default class InfoPage extends React.Component {
   }
 
   openUrl = (id)=>{
-    var href = "//"+window.location.host+"/getGoodsDetail"+"?invitationCode="+getParams.invitationCode+"&userId="+getParams.userId+"&goodsId="+id
+    var href = "//"+window.location.host+"/app/getGoodsDetail"+"?invitationCode="+getParams.invitationCode+"&userId="+getParams.userId+"&goodsId="+id
     window.location.href = href;
   }
 

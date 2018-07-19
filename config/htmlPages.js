@@ -1,5 +1,10 @@
 module.exports=[
     {
+        "filename": "Download.html",
+        "template": "./src/Download/index.html",
+        "chuckName": "Download"
+    },
+    {
         "filename": "getGoodsDetail.html",
         "template": "./src/getGoodsDetail/index.html",
         "chuckName": "getGoodsDetail"
@@ -33,6 +38,11 @@ module.exports=[
         "filename": "html_model.html",
         "template": "./src/html_model/index.html",
         "chuckName": "html_model"
+    },
+    {
+        "filename": "privacy.html",
+        "template": "./src/privacy/index.html",
+        "chuckName": "privacy"
     },
     {
         "filename": "regUser.html",

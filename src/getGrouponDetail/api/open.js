@@ -16,12 +16,12 @@ var url = {
     weixin:"jimigoapp://jm.jimgo.com.cn:8089",
     ios:"jimigoapp://jm.jimgo.com.cn:8089",
     android:"jimigoapp://jm.jimgo.com.cn:8089",
-    iosDownLoad:"//www.baidu.com/#iosDownLoad",
-    androidDownLoad:"//www.baidu.com/#androidDownLoad",
+    iosDownLoad:"https://www.pgyer.com/9ACs",
+    androidDownLoad:" https://www.pgyer.com/53Gy",
     yybUrl:"http://www.baidu.com"
 }
 
-var time=5000;
+var time=3000;
 
 function downLoad(url){
     setTimeout(function () {

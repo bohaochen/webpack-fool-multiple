@@ -1,4 +1,7 @@
 module.exports={
+    "Download": [
+        "./src/Download/index.js"
+    ],
     "getGoodsDetail": [
         "./src/getGoodsDetail/index.js"
     ],
@@ -19,6 +22,9 @@ module.exports={
     ],
     "html_model": [
         "./src/html_model/index.js"
+    ],
+    "privacy": [
+        "./src/privacy/index.js"
     ],
     "regUser": [
         "./src/regUser/index.js"

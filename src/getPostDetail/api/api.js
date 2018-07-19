@@ -2,7 +2,7 @@
 console.log("编译环境:",NODE_ENV)
 const URL = {
     dev:"/api",
-    prod:"/api",devImgPathUrl:"//jimigooss.suermen.com/",prodImgPath:"//joss.jimigo.com.cn/"
+    prod:"/api",devImgPathUrl:"//joss.jimigo.com.cn/",prodImgPath:"//joss.jimigo.com.cn/"
 }
 const APIURL = NODE_ENV=="development"?URL.dev:URL.prod;const IMGURL = NODE_ENV=="development"?URL.devImgPathUrl:URL.devImgPathUrl;
 console.log("接口地址：",APIURL)
@@ -29,11 +29,11 @@ var time = getNowFormatDate().split(" ")[0];
 
 const API = {
     //GET卡券详情
-    apiKey:"3A87E38D08DBD775AF34D96923679AEB",
+    apiKey:"3A87E38D08DBD775AF34D96923679AEB",wxShare:APIURL+"/rest/v1/myInfo/getWeChatSign",
     timestamp:time,
     androidUrl:"http://sj.qq.com/myapp/detail.htm?apkName=com.tencent.weishi",
     iosUrl:"http://sj.qq.com/myapp/detail.htm?apkName=com.tencent.weishi",
-    imgPath:"jimigooss.suermen.com/",
+    imgPath:"joss.jimigo.com.cn/",
     cardInfo:APIURL+"/rest/v1/classify/getGoodsDetail"
 }
 console.log("接口列表：",API)

@@ -47,12 +47,15 @@ function each_file(dir) {
       file_obj['filename'] = file+'.html';
       file_obj['template'] = file_path+'/index.html';
       file_obj['chuckName'] = chunk_name;
-      pagesArray.push(file_obj)
+      if(file!="common"){
+        pagesArray.push(file_obj)
+      }
     })
   } catch (e) {
 
   }
 }
+
 
 each_file('./src');
 let htmlsPluginStr = 'module.exports=' + JSON.stringify(pagesArray, null, 4)

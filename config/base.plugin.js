@@ -21,6 +21,7 @@ pagesArray.forEach((page) => {
     template: page.template,
     filename: page.filename,
     chunks: ['vendors', page.chuckName],
+    favicon:page.favicon,
     // hash:true,
     minify: {
       removeComments: true,

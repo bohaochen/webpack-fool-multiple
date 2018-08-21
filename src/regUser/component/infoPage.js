@@ -3,9 +3,9 @@ import { Route } from "react-router-dom";
 import { Toast } from "antd-mobile";
 import copy from 'copy-to-clipboard';
 import { GetWxConfig } from '../api/apiFn';
-import open from '../api/open';
-import API from '../api/api';
-import getUrlArgObject from '../api/getUrlArgObject';
+import open from '../../common/api/open';
+import API from '../../common/api/api';
+import getUrlArgObject from '../../common/api/getUrlArgObject';
 const getParams = getUrlArgObject();
 const path = "regUser";
 
@@ -139,7 +139,8 @@ export default class InfoPage extends React.Component {
     return (
       <div className="invite-page">
         <div className="bg-box">
-          <img className="imgc" src={headImg} alt="" />
+        {headImg?<img className="imgc" src={headImg} alt="" />:<img className="imgc" src={require("../../common/assets/img/de.jpg")} alt="" />}
+
           <span className="bgt">{name}</span>
           <span className="bgc">邀请您开启jimigo之路</span>
         </div>

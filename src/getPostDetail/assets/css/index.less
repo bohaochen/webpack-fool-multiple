@@ -5,26 +5,26 @@ body {
     background: #F5F5F5;
 }
 
-.fc{
+.fc {
     width: 100%;
     height: 100%;
     position: fixed;
     top: 0px;
     z-index: 10000;
     background: rgba(0, 0, 0, 0.8);
-    img{
+    img {
         right: 19px;
         top: 24px;
         width: 45px;
         height: 63px;
         position: absolute;
     }
-    .text{
-        font-size:17px;
-        color: #eee; 
+    .text {
+        font-size: 17px;
+        color: #eee;
         position: relative;
         margin-top: 67px;
-        span{
+        span {
             display: block;
             line-height: 30px;
             padding-left: 107px;
@@ -33,15 +33,15 @@ body {
     }
 }
 
-.orderBox{
+.orderBox {
     height: 32px;
     line-height: 32px;
     font-size: 0px;
-    .orderTitle{
+    .orderTitle {
         font-size: 14px;
-        color:rgba(0,0,0,1);
+        color: rgba(0, 0, 0, 1);
     }
-    .more{
+    .more {
         float: right;
         color: #999;
     }
@@ -84,103 +84,141 @@ body {
     }
 }
 
-.infoBox {
-    padding: 20px;
-    padding-bottom: 0px;
-    background: #fff;
-    font-size: 0px;
-    .priceBox {
-        .rightPrice {
-            font-size: 24px;
-            height: 24px;
-            line-height: 24px;
-            display: inline-block;
-            font-weight: bold;
-            color: red;
-            position: relative;
-            margin-left: -5px;
-        }
-        .oldPrice {
-            font-size: 14px;
-            color: #b3b3b3;
-            left: 10px;
-            display: inline-block;
-            position: relative;
-        }
-        .oldPrice::after {
-            content: "";
-            width: 110%;
-            height: 1px;
-            background: rgb(185, 185, 185);
-            left: 0px;
-            bottom: 9px;
-            position: absolute
-        }
-        .jfInfo {
-            display: block;
-            font-size: 12px;
-            color: red;
-            margin-top: 6px;
-        }
-    }
-    .infoContent {
-        padding: 0px;
-        margin-top: 4px;
-        .infoTitle {
-            display: inline-block;
-            font-size: 15px;
-            line-height: 22px;
-            color: #000;
-            font-weight: bold;
-        }
-        .infoC {
-            margin-top: 6px;
-            margin-bottom: 12px;
-            display: block;
-            font-size: 12px;
-            line-height: 16px;
-            color: #999;
-        }
-    }
-    .labelBox {
-        display: block;
-        font-size: 0px;
-        border-top: 1px solid #D8D8D8;
-        .moreBox{
-            width: 350px;
-        }
-    }
-    .labelItem {
-        display: inline-block;
-        padding: 12px 0px;
-        margin-right: 10px;
-        .am-icon {
-            width: 12px;
-            height: 12px;
-            color: #999;
-            margin-right: 3px;
-        }
-    }
-    .labelItem span {
-        display: inline-block;
-        color: #999;
-        font-size: 12px;
-        position: relative;
-        top: -2px;
-    }
-}
+
 
 .pageContent {
     width: 100%;
     height: auto;
-    video{
+    background: #fff;
+    video {
+        width: 100%;
+        height: 210px;
+        background: #000;
     }
     img {
         width: 100%;
     }
+    .textC {
+    padding: 0px 20px;
+        .title {
+            margin: 10px 0px;
+            font-size: 16px;
+            line-height: 22px;
+            color: #000;
+        }
+        .editC{
+            margin: 16px 0px;
+            font-size: 12px;
+            color: #333;
+            img{
+                width: 100%;
+            }
+        }
+        .title-info {
+            margin: 5px 0px;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            img {
+                width: 24px;
+                height: 24px;
+                border-radius: 50%;
+            }
+            .user-name {
+                color: #333;
+                margin-left: 8px;
+            }
+            .see-num {
+                text-align: right;
+                flex: 1;
+                color: rgb(155, 155, 155);
+            }
+        }
+    }
 }
-.pageFoot{
-    padding:10px 13px;
+
+.items-info{
+    margin-top: 10px;
+    position: relative;
+    overflow: hidden;
+    padding: 0px 20px;
+    background: #fff;
+  
+    .title{
+        margin: 20px 0px 0px;
+        font-size: 14px;
+        color: #000;
+        font-weight: bold;
+    }
+    .item-info{
+        display: flex;
+        position: relative;
+        height: 80px;
+        padding: 20px 0px;
+        img{
+            width: 80px;
+            height: 80px;
+            margin-right: 10px;
+            flex-shrink:0;
+        }
+        .info-text{
+            height: 100%;
+            width: 100%;
+            position: relative;
+            .title-t{
+                display: block;
+                font-size: 16px;
+            }
+        }
+    }
+    .item-info::after{
+        content:"";
+        display: block;
+        width: 100%;
+        height: 1px;
+        background: #ccc;
+        position: absolute;
+        bottom: -1px;
+    }
+    .infoBox {
+        background: #fff;
+        font-size: 0px;
+        position: absolute;
+        bottom: 0px;
+        .priceBox {
+            .rightPrice {
+                font-size: 16px;
+                height: 16px;
+                line-height: 16px;
+                display: inline-block;
+                font-weight: bold;
+                color: red;
+                position: relative;
+                margin-left: -5px;
+            }
+            .oldPrice {
+                font-size: 12px;
+                color: #b3b3b3;
+                left: 10px;
+                display: inline-block;
+                position: relative;
+            }
+            .oldPrice::after {
+                content: "";
+                width: 110%;
+                height: 1px;
+                background: rgb(185, 185, 185);
+                left: 0px;
+                bottom: 9px;
+                position: absolute
+            }
+        }
+
+    }
+    
+}
+.pageFoot {
+    padding: 10px 13px;
     position: fixed;
     bottom: 0px;
     z-index: 10;
@@ -190,43 +228,57 @@ body {
     box-sizing: border-box;
 }
 
-.btncss{
-    height: 38px!important;
-    line-height: 38px!important;
-    span{
+.redBtn{
+    position: absolute;
+    right: 0px;
+    bottom: -6px;
+}
+.btncss {
+    height: 32px !important;
+    line-height: 32px !important;
+    width: 64px;
+    box-shadow: 1px 1px 4px rgba(255, 0, 0, 0.349);
+
+    span {
         font-size: 14px;
     }
-} 
-
-.redBtn .am-button{
-    background: #FF2738!important;
-    border:0px solid #FF2738!important;
+    img{
+        margin: 0px!important;
+        margin-top: 5px!important;
+        width: 20px!important;
+        height: 20px!important;
+    }
 }
 
-.redBtn .am-button-active{
-    background: rgba(255, 39, 57, 0.575)!important;
+.redBtn .am-button {
+    background: #FF2738 !important;
+    border: 0px solid #FF2738 !important;
 }
 
-.redBtn .am-button::before{
-    border:0px solid #FF2738!important;
+.redBtn .am-button-active {
+    background: rgba(255, 39, 57, 0.575) !important;
 }
 
-.cantClickBtn .am-button-disabled{
-    color: #CCCCCC!important;
-    border:0px solid #999999!important;
-    background: #999999!important;
-    opacity: 1!important;
+.redBtn .am-button::before {
+    border: 0px solid #FF2738 !important;
 }
 
-.cantClickBtn .am-button-disabled::before{
-    border:0px solid #999999!important;
+.cantClickBtn .am-button-disabled {
+    color: #CCCCCC !important;
+    border: 0px solid #999999 !important;
+    background: #999999 !important;
+    opacity: 1 !important;
 }
 
-.toastBox{
+.cantClickBtn .am-button-disabled::before {
+    border: 0px solid #999999 !important;
+}
+
+.toastBox {
     width: 100%;
     padding: 18px 0px;
     bottom: 66px;
-    box-sizing:  border-box;
+    box-sizing: border-box;
     position: fixed;
     background: #FF2738;
     color: #fff;
@@ -234,27 +286,26 @@ body {
     text-align: center;
 }
 
-.gotoTop{
+.gotoTop {
     width: 44px;
     height: 44px;
     position: fixed;
-    border-radius: 50%;
-    // box-shadow: 0px 0px 4px #00000045;
+    border-radius: 50%; // box-shadow: 0px 0px 4px #00000045;
     right: 10px;
     bottom: 70px;
-    img{
+    img {
         width: 100%;
         height: 100%;
     }
 }
 
-.showView{
+.showView {
     visibility: visible;
     opacity: 1;
     transition: all 0.4s;
 }
 
-.hiddenView{
+.hiddenView {
     visibility: visible;
     transition: all 0.4s;
     opacity: 0;

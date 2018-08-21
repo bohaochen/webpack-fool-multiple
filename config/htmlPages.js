@@ -2,51 +2,61 @@ module.exports=[
     {
         "filename": "Download.html",
         "template": "./src/Download/index.html",
-        "chuckName": "Download"
+        "chuckName": "Download",
+        "favicon": "./jimigo-logo.png"
     },
     {
         "filename": "getGoodsDetail.html",
         "template": "./src/getGoodsDetail/index.html",
-        "chuckName": "getGoodsDetail"
+        "chuckName": "getGoodsDetail",
+        "favicon": "./jimigo-logo.png"
     },
     {
         "filename": "getGrouponDetail.html",
         "template": "./src/getGrouponDetail/index.html",
-        "chuckName": "getGrouponDetail"
+        "chuckName": "getGrouponDetail",
+        "favicon": "./jimigo-logo.png"
     },
     {
         "filename": "getGrouponOpenDetail.html",
         "template": "./src/getGrouponOpenDetail/index.html",
-        "chuckName": "getGrouponOpenDetail"
+        "chuckName": "getGrouponOpenDetail",
+        "favicon": "./jimigo-logo.png"
     },
     {
         "filename": "getPostDetail.html",
         "template": "./src/getPostDetail/index.html",
-        "chuckName": "getPostDetail"
+        "chuckName": "getPostDetail",
+        "favicon": "./jimigo-logo.png"
     },
     {
         "filename": "getReserveGoodsDetail.html",
         "template": "./src/getReserveGoodsDetail/index.html",
-        "chuckName": "getReserveGoodsDetail"
+        "chuckName": "getReserveGoodsDetail",
+        "favicon": "./jimigo-logo.png"
     },
     {
         "filename": "getUserEnshrineList.html",
         "template": "./src/getUserEnshrineList/index.html",
-        "chuckName": "getUserEnshrineList"
+        "chuckName": "getUserEnshrineList",
+        "favicon": "./jimigo-logo.png"
     },
     {
         "filename": "html_model.html",
         "template": "./src/html_model/index.html",
-        "chuckName": "html_model"
+        "chuckName": "html_model",
+        "favicon": "./jimigo-logo.png"
     },
     {
         "filename": "privacy.html",
         "template": "./src/privacy/index.html",
-        "chuckName": "privacy"
+        "chuckName": "privacy",
+        "favicon": "./jimigo-logo.png"
     },
     {
         "filename": "regUser.html",
         "template": "./src/regUser/index.html",
-        "chuckName": "regUser"
+        "chuckName": "regUser",
+        "favicon": "./jimigo-logo.png"
     }
 ]

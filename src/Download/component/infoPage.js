@@ -3,9 +3,9 @@ import { Route } from "react-router-dom";
 import { Toast } from "antd-mobile";
 import copy from 'copy-to-clipboard';
 import { GetWxConfig } from '../api/apiFn';
-import open from '../api/open';
-import API from '../api/api';
-import getUrlArgObject from '../api/getUrlArgObject';
+import open from '../../common/api/open';
+import API from '../../common/api/api';
+import getUrlArgObject from '../../common/api/getUrlArgObject';
 const getParams = getUrlArgObject();
 const path = "regUser";
 
@@ -56,7 +56,7 @@ export default class InfoPage extends React.Component {
 
   componentDidMount() {
     //转发到朋友圈
-    open( path, getParams, this)
+      open( path, getParams, this)
   }
 
   render() {

@@ -2,9 +2,9 @@ import React from "react";
 import { Route } from "react-router-dom";
 import { Carousel, WingBlank, Icon, Button } from "antd-mobile";
 import { getReserveGoodsDetail,GetWxConfig } from '../api/apiFn';
-import API from '../api/api';
-import open from '../api/open';
-import getUrlArgObject from '../api/getUrlArgObject';
+import API from '../../common/api/api';
+import open from '../../common/api/open';
+import getUrlArgObject from '../../common/api/getUrlArgObject';
 
 const getParams = getUrlArgObject();
 const path = "getReserve";
@@ -253,8 +253,8 @@ export default class InfoPage extends React.Component {
           }
         </div>
         <div className="pageFoot">
-          <div className={this.state.data.statusCode!=1 ? "cantClickBtn" : "redBtn"}>
-            <Button type="primary"  onClick={open.bind(this,path,getParams,this)} disabled={this.state.data.statusCode!=1 ? true : false} className="btncss">{this.state.data.statusCode!=1 ? "活动已结束" : "立即预定"}</Button>
+          <div className={this.state.data.statusCode!=0 ? "cantClickBtn" : "redBtn"}>
+            <Button type="primary"  onClick={open.bind(this,path,getParams,this)} disabled={this.state.data.statusCode!=0 ? true : false} className="btncss">{this.state.data.statusCode!=0 ? "活动已结束" : "立即预定"}</Button>
           </div>
         </div>
         <div className={this.state.isScroll ? "gotoTop showView" : "gotoTop hiddenView"} onClick={this.gotoTop}>

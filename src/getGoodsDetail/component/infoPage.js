@@ -1,9 +1,9 @@
 import React from "react";
 import { Carousel, WingBlank, Icon, Button} from "antd-mobile";
-import { GetCardInfo,GetWxConfig } from '../api/apiFn';
-import API from '../api/api';
-import open from '../api/open';
-import getUrlArgObject from '../api/getUrlArgObject';
+import { GetCardInfo,GetWxConfig } from '../../common/api/apiFn';
+import API from '../../common/api/api';
+import open from '../../common/api/open';
+import getUrlArgObject from '../../common/api/getUrlArgObject';
 
 const getParams = getUrlArgObject();
 const path = "getGoodsDetail";

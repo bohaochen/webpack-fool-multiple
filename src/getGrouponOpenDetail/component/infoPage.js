@@ -1,9 +1,9 @@
 import React from "react";
 import { Route } from "react-router-dom";
 import { Carousel, WingBlank, Icon, Button } from "antd-mobile";
-import API from '../api/api';
-import open from '../api/open';
-import getUrlArgObject from '../api/getUrlArgObject';
+import API from '../../common/api/api';
+import open from '../../common/api/open';
+import getUrlArgObject from '../../common/api/getUrlArgObject';
 import { getGrouponOpenDetail ,GetWxConfig} from '../api/apiFn';
 
 const getParams = getUrlArgObject();
@@ -34,6 +34,18 @@ export default class InfoPage extends React.Component {
     })
   }
 
+ formatDuring=(mss)=> {
+    var days = parseInt(mss / (1000 * 60 * 60 * 24));
+    var hours = parseInt((mss % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    var minutes = parseInt((mss % (1000 * 60 * 60)) / (1000 * 60));
+    var seconds = (mss % (1000 * 60)) / 1000;
+    if(mss>0){
+      return days+"天"+hours+":" + minutes + "." + seconds + "后结束";
+    }else{
+      return "拼团时间已结束";
+    }
+}
+
   componentWillMount() {
     var _this = this;
     var data = getGrouponOpenDetail(getParams.grouponId, getParams.orderNo,getParams.userId,function (data) {
@@ -42,7 +54,7 @@ export default class InfoPage extends React.Component {
       _this.setState({
         data: data.returnValue,
       })
-
+      
 
       const debug = NODE_ENV == "development" ? 0 : 1;
 
@@ -121,29 +133,24 @@ export default class InfoPage extends React.Component {
     return (
       <div className="card-page">
         <div className="activityImg">
-          <img src={require("../assets/img/timg.jpg")} alt="" />
+          <img src={this.state.data.goodsPic?API.imgPath+this.state.data.goodsPic:""} alt="" />
         </div>
         <div className="infoBox">
           <div className="infoContent">
             <span className="infoTitle">
-              澳洲红酒干红来爱爱爱爱爱我爱爱爱爱我爱爱爱爱爱爱澳洲红酒干红来爱爱爱爱爱我爱爱爱爱我爱爱爱爱爱爱爱啊1729ml/瓶
+            {this.state.data.activityName}
               </span>
           </div>
           <div className="priceBox">
-            <span className="rightPrice">￥288</span>
-            <span className="oldPrice">￥350</span>
-            <span className="ptnum">已拼1896件-20人拼团</span>
+            <span className="rightPrice">￥{this.state.data.memberPrice}</span>
+            <span className="oldPrice">￥{this.state.data.price}</span>
+            <span className="ptnum">已拼{this.state.data.joinCount}件-{this.state.data.memberCount }人拼团</span>
           </div>
 
           <div className="labelBox">
-            <span className="labelItem">
-              <Icon type="check-circle-o" size={"xxs"} />
-              <span>包邮</span>
-            </span>
-            <span className="labelItem">
-              <Icon type="check-circle-o" size={"xxs"} />
-              <span>包邮</span>
-            </span>
+
+
+
             <span className="labelItem">
               <Icon type="check-circle-o" size={"xxs"} />
               <span>包邮</span>
@@ -152,12 +159,15 @@ export default class InfoPage extends React.Component {
         </div>
         <div className="ptInfo">
           <div className="ptText">
-          <div className="limg" >
-            <img src={require("../assets/img/timg.jpg")} alt="" />
+          <div className="limg">
+          {this.state.data.grouponOpenItemList? <img src={API.imgPath+this.state.data.grouponOpenItemList[0].userPic} alt="" />:<img src={require("../assets/img/timg.jpg")} alt="" />}
+           
           </div>
             <div className="rText">
-              <span className="title">本团名额已满</span>
-              <span className="time">4天23:15:36.6后结束</span>
+            {this.state.data.expireDateTime-new Date().getTime()<0?
+              <span className="title redT">拼团失败</span>
+              :(this.state.data.statusCode==1?<span className="title">本团名额已满</span>:<span className="title">本团仅剩<span className="redT">{this.state.data.memberCount-this.state.data.joinCount}</span>个名额</span>)  }
+              <span className="time">{this.formatDuring(this.state.data.expireDateTime-new Date().getTime())}</span>
             </div>
           </div>
 

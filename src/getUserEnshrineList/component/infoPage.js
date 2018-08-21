@@ -2,11 +2,11 @@ import React from "react";
 import { Route } from "react-router-dom";
 import { Carousel,PullToRefresh, WingBlank,Toast, Button } from "antd-mobile";
 import { getUserEnshrineList, GetMyInfo,GetWxConfig } from '../api/apiFn';
-import API from '../api/api';
-import getUrlArgObject from '../api/getUrlArgObject';
+import API from '../../common/api/api';
+import getUrlArgObject from '../../common/api/getUrlArgObject';
 const getParams = getUrlArgObject();
 const path = "getUserEnshrineList";
-import open from '../api/open';
+import open from '../../common/api/open';
 
 
 var headImg = API.imgPath+ decodeURI(getParams.userPic);
@@ -153,7 +153,7 @@ export default class InfoPage extends React.Component {
         }}
       >
        <div className="bg-box">
-          <img className="imgc" src={headImg} alt="" />
+        {headImg?<img className="imgc" src={headImg} alt="" />:<img className="imgc" src={require("../../common/assets/img/de.jpg")} alt="" />}
           <span className="bgt">{name}</span>
           <span className="bgc">我在吉米优选里发现了一些优质商品</span>
         </div>

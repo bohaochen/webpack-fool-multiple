@@ -1,9 +1,9 @@
 import React from "react";
 import { Carousel, WingBlank, Icon, Button } from "antd-mobile";
 import { getGrouponDetail,GetWxConfig} from '../api/apiFn';
-import API from '../api/api';
-import open from '../api/open';
-import getUrlArgObject from '../api/getUrlArgObject';
+import API from '../../common/api/api';
+import open from '../../common/api/open';
+import getUrlArgObject from '../../common/api/getUrlArgObject';
 
 
 const getParams = getUrlArgObject();
@@ -142,7 +142,6 @@ export default class InfoPage extends React.Component {
     }
 
     nowTime = this.state.data.endDtm > (new Date()).valueOf();
-
     if (nowTime) {
       btn = <div>
         <div className={"yewBtn"} onClick={this.openFn}>

@@ -3,8 +3,8 @@ import { Route } from "react-router-dom";
 import { Toast } from "antd-mobile";
 import copy from 'copy-to-clipboard';
 import { GetWxConfig } from '../api/apiFn';
-import API from '../api/api';
-import getUrlArgObject from '../api/getUrlArgObject';
+import API from '../../common/api/api';
+import getUrlArgObject from '../../common/api/getUrlArgObject';
 const getParams = getUrlArgObject();
 const path = "regUser";
 

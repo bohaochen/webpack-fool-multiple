@@ -11,6 +11,9 @@ let entry_files = {};
 function each_entry_file(dir) {
   try {
     fs.readdirSync(dir).forEach(function (file) {
+      if(file=="common"){
+        return
+      }
       let file_path = dir + '/' + file;
       let fname = path.basename(file_path, '.js');
       entry_files[fname] = [(file_path+'/index.js')];
@@ -47,6 +50,7 @@ function each_file(dir) {
       file_obj['filename'] = file+'.html';
       file_obj['template'] = file_path+'/index.html';
       file_obj['chuckName'] = chunk_name;
+      file_obj['favicon'] = './jimigo-logo.png';
       if(file!="common"){
         pagesArray.push(file_obj)
       }

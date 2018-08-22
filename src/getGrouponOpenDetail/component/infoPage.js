@@ -173,7 +173,9 @@ export default class InfoPage extends React.Component {
 
           <div className={"redBtn dbtn"}>
             <Button type="primary" className="btncss" onClick={open.bind(this,path,getParams,this)}>
-              <span>查看更多拼团商品</span>
+               {
+                this.state.data.statusCode!=0?<span>查看更多拼团商品</span>:<span>参与拼团</span>
+              }
             </Button>
           </div>
         </div>

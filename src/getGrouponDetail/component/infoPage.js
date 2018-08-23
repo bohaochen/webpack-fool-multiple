@@ -46,6 +46,8 @@ export default class InfoPage extends React.Component {
 
   componentWillMount() {
     var _this = this;
+    console.log(getParams.goodsId, getParams.userId, getParams.activityId)
+    console.log(getParams)
     var data = getGrouponDetail(getParams.goodsId, getParams.userId, getParams.activityId, function (data) {
       console.log(data)
       var imgArr = [];
@@ -235,9 +237,9 @@ export default class InfoPage extends React.Component {
           </div>
           <ul className="orderList">
             {
-              this.state.data.grouponOpenDTOList && this.state.data.grouponOpenDTOList.map(function (val, index) {
+              this.state.data.grouponOpenDTOList && this.state.data.grouponOpenDTOList.map((val, index) =>{
                 return (
-                  <li key={val}>
+                  <li key={index}>
                     <div className="lf">
                       <img src={API.imgPath + val.userPic} alt="" />
                       <span className="name">{val.nickName}</span>

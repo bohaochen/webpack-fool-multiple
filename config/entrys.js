@@ -20,8 +20,8 @@ module.exports={
     "getUserEnshrineList": [
         "./src/getUserEnshrineList/index.js"
     ],
-    "html_model": [
-        "./src/html_model/index.js"
+    "login": [
+        "./src/login/index.js"
     ],
     "privacy": [
         "./src/privacy/index.js"

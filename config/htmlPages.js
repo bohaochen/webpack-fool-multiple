@@ -42,9 +42,9 @@ module.exports=[
         "favicon": "./jimigo-logo.png"
     },
     {
-        "filename": "html_model.html",
-        "template": "./src/html_model/index.html",
-        "chuckName": "html_model",
+        "filename": "login.html",
+        "template": "./src/login/index.html",
+        "chuckName": "login",
         "favicon": "./jimigo-logo.png"
     },
     {

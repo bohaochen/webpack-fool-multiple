@@ -4,7 +4,7 @@ const URL = {
     dev:"/api",
     prod:"/api",devImgPathUrl:"//jimigooss.suermen.com/",prodImgPath:"//joss.jimigo.com.cn/"
 }
-const APIURL = NODE_ENV=="development"?URL.dev:URL.prod;const IMGURL = NODE_ENV=="development"?URL.devImgPathUrl:URL.devImgPathUrl;
+const APIURL = NODE_ENV=="development"?URL.dev:URL.prod;const IMGURL = NODE_ENV=="development"?URL.devImgPathUrl:URL.prodImgPath;
 console.log("接口地址：",APIURL)
 
 function getNowFormatDate() {

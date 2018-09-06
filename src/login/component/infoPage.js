@@ -1,7 +1,6 @@
 import React from "react";
 import { Route } from "react-router-dom";
 import { Toast, List, InputItem } from "antd-mobile";
-import copy from "copy-to-clipboard";
 import { GetWxConfig } from "../../common/api/apiFn";
 import open from "../../common/api/open";
 import API from "../../common/api/api";
@@ -12,6 +11,9 @@ const path = "regUser";
 var headImg = API.imgPath + decodeURI(getParams.userPic);
 var name = decodeURI(getParams.nickName);
 var invitationCode = decodeURI(getParams.invitationCode);
+
+var setIntervalCode = "";
+var canSend = true;
 
 export default class InfoPage extends React.Component {
   constructor() {
@@ -29,7 +31,8 @@ export default class InfoPage extends React.Component {
     phone: "",
     YZM: "",
     YQM: "",
-    sendText: "请发送验证码"
+    canSignUp: false,
+    sendText: "获取验证码"
   };
 
   copyUrl = () => {
@@ -64,7 +67,7 @@ export default class InfoPage extends React.Component {
     //转发到朋友圈
     document.title = "注册";
     const debug = NODE_ENV == "development" ? 0 : 1;
-    var data = GetWxConfig(debug, function(data) {
+    var data = GetWxConfig(debug, function (data) {
       //
       wx.config({
         debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来
@@ -74,17 +77,17 @@ export default class InfoPage extends React.Component {
         signature: data.returnValue.signature, // 必填，签名，见附录1
         jsApiList: data.returnValue.jsApiList
       });
-      wx.ready(function() {
+      wx.ready(function () {
         // config信息验证后会执行ready方法，所有接口调用都必须在config接口获得结果之后，config是一个客户端的异步操作，所以如果需要在页面加载时就调用相关接口，
         //则须把相关接口放在ready函数中调用来确保正确执行。对于用户触发时才调用的接口，则可以直接调用，不需要放在ready函数中。
         wx.onMenuShareTimeline({
           title: "好友邀请您开启jimigo之路",
           link: window.location.href,
           imgUrl: "http://jm.jimigo.com.cn/app/jimigo-logo.png",
-          success: function() {
+          success: function () {
             console.log("分享成功");
           },
-          cancel: function() {
+          cancel: function () {
             console.log("分享失败");
           }
         });
@@ -100,10 +103,10 @@ export default class InfoPage extends React.Component {
           imgUrl: "http://jm.jimigo.com.cn/app/jimigo-logo.png",
           type: "link",
           dataUrl: "",
-          success: function() {
+          success: function () {
             console.log("分享成功");
           },
-          cancel: function() {
+          cancel: function () {
             console.log("分享失败");
           }
         });
@@ -117,16 +120,17 @@ export default class InfoPage extends React.Component {
     });
   };
 
-  sendYZM = () => {};
+  sendYZM = () => { };
 
   onErrorClick = () => {
     if (this.state.hasErrorPhone) {
       Toast.info("手机号小于11位");
-    }else if(this.state.hasErrorPhone){
+    } else if (this.state.hasErrorPhone) {
       Toast.info("手机号小于6位");
     }
   };
-  onChange = (type,value) => {
+  onChange = (type, value) => {
+    var { hasErrorPhone, hasErrorYZM, hasErrorYQM, phone, YZM, YQM } = this.state
     switch (type) {
       case "phone":
         if (value.replace(/\s/g, "").length < 11) {
@@ -139,7 +143,9 @@ export default class InfoPage extends React.Component {
           });
         }
         this.setState({
-          phone:value
+          phone: value
+        }, () => {
+          this.canSignUpFn();
         });
         break;
       case "YZM":
@@ -153,11 +159,13 @@ export default class InfoPage extends React.Component {
           });
         }
         this.setState({
-          YZM:value
+          YZM: value
+        }, () => {
+          this.canSignUpFn();
         });
         break;
-        case "YQM":
-        if (value.replace(/\s/g, "").length < 8) {
+      case "YQM":
+        if (value.replace(/\s/g, "").length < 5) {
           this.setState({
             hasErrorYQM: true
           });
@@ -167,14 +175,66 @@ export default class InfoPage extends React.Component {
           });
         }
         this.setState({
-          YQM:value
+          YQM: value
+        }, () => {
+          this.canSignUpFn();
         });
         break;
       default:
         break;
     }
-  
   };
+
+  canSignUpFn = () => {
+    var { hasErrorPhone, hasErrorYZM, hasErrorYQM, phone, YZM, YQM } = this.state
+
+    if (!hasErrorPhone && !hasErrorYZM && !hasErrorYQM && phone.length > 0 && YZM.length > 0 && YQM.length > 0) {
+      //判定是否可以点击注册按钮
+      this.setState({
+        canSignUp: true
+      })
+    } else {
+      this.setState({
+        canSignUp: false
+      })
+    }
+  }
+
+  getCode = () => {
+    //发送验证码
+    if (canSend) {
+      canSend = false;
+      var num = 59;
+      this.setState({
+        sendText: 60 + "s"
+      }, () => {
+        setIntervalCode = setInterval(() => {
+          if (num == 0) {
+            this.setState({
+              sendText: "获取验证码"
+            })
+            canSend = true;
+            clearInterval(setIntervalCode)
+          } else {
+            this.setState({
+              sendText: (num -= 1) + "s"
+            })
+          }
+        }, 1000)
+      })
+    }
+  }
+
+  signUp = () => {
+    //注册
+    console.log(11111111111)
+    if (this.state.canSignUp) {
+      this.setState({
+        canSignUp: !this.state.canSignUp
+      })
+      Toast.info("提示演示");
+    }
+  }
 
   render() {
     return (
@@ -184,7 +244,6 @@ export default class InfoPage extends React.Component {
           src={require("../../common/assets/img/loginBg.png")}
           alt=""
         />
-
         <span className="red_title">欢迎加入Jimigo</span>
 
         <div className="selectTabsBox">
@@ -203,7 +262,7 @@ export default class InfoPage extends React.Component {
                 placeholder="请输入手机号码"
                 error={this.state.hasErrorPhone}
                 onErrorClick={this.onErrorClick}
-                onChange={this.onChange.bind(this,"phone")}
+                onChange={this.onChange.bind(this, "phone")}
                 value={this.state.phone}
               >
                 +86
@@ -212,38 +271,52 @@ export default class InfoPage extends React.Component {
             <List>
               <InputItem
                 type="number"
+                className="yzmInput"
                 maxLength="6"
                 placeholder="请输入验证码"
                 error={this.state.hasErrorYZM}
                 onErrorClick={this.onErrorClick}
-                onChange={this.onChange.bind(this,"YZM")}
+                onChange={this.onChange.bind(this, "YZM")}
                 value={this.state.YZM}
               />
-              <div className="getYZM cantGet">获取验证码</div>
+              <div className={this.state.sendText == "获取验证码" ? "getYZM " : "getYZM cantGet"} onClick={this.getCode}>{this.state.sendText}</div>
             </List>
-            <List>
+            
+            {
+              this.state.active == 0 ?
+                <div>
+                  <List>
               <InputItem
                 type="text"
                 placeholder="请输入推荐码"
                 error={this.state.hasErrorYQM}
                 onErrorClick={this.onErrorClick}
-                onChange={this.onChange.bind(this,"YQM")}
+                onChange={this.onChange.bind(this, "YQM")}
                 value={this.state.YQM}
               />
             </List>
+                  <div className="redBtn">
+                    <div className={(!this.state.canSignUp ? "styleRedCant " : "") + "styleRed m_25_17"} onClick={this.signUp}>
+                      注册
+                    </div>
+                  </div>
+                  <div className="readMe">
+                    点击注册代表您已阅读并同意<span>《用户使用协议》</span>
+                  </div>
+                </div>
+                :
+  <div className="redBtn" style={{marginBottom:"43px"}}>
+                    <div className={(!this.state.canSignUp ? "styleRedCant " : "") + "styleRed m_25_17"} onClick={this.signUp}>
+                      登录
+                    </div>
+                  </div>
+
+            }
           </div>
-          <div className="loginBox" />
+
         </div>
 
-        <div className="btn-box">
-          <span className="btnt">或在注册时填入下方推荐码</span>
-          <input className="btnr" type="text" defaultValue={invitationCode} />
-          <div className={"redBtn"}>
-            <button className="btncss am-button" onClick={this.copyUrl}>
-              复制
-            </button>
-          </div>
-        </div>
+
 
         <div
           className="fc"
@@ -261,12 +334,3 @@ export default class InfoPage extends React.Component {
   }
 }
 
-class ABC extends React.Component {
-  constructor() {
-    super();
-  }
-
-  render() {
-    return <div>小阿拉啦1啦啦啦</div>;
-  }
-}

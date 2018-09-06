@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node output && node build/devServer",
-    "build:stg": "node output && webpack --config build/webpack.dev.config.js ",
+    "build:stg": "node output && webpack --config build/webpack.dev.OutPut.config ",
     "build:prod": "node output && webpack --config build/webpack.prod.config.js --optimize-minimize"
   },
   "author": "bbbbb",

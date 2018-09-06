@@ -100,6 +100,7 @@ export default class InfoPage extends React.Component {
 
   componentDidMount() {
     var _this = this;
+    console.log(API)
     window.addEventListener("scroll", () => {
       clearTimeout("isScrollFn");
       if (!this.state.isScroll) {

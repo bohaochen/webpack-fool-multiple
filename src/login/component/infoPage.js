@@ -233,6 +233,10 @@ export default class InfoPage extends React.Component {
         canSignUp: !this.state.canSignUp
       })
       Toast.info("提示演示");
+
+      setTimeout(()=>{
+        this.props.history.push("/onlyCode")
+      })
     }
   }
 

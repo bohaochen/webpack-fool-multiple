@@ -4,6 +4,7 @@ import { GetCardInfo,GetWxConfig } from '../../common/api/apiFn';
 import API from '../../common/api/api';
 import open from '../../common/api/open';
 import getUrlArgObject from '../../common/api/getUrlArgObject';
+import Sku from '../../common/component/sku/sku'
 
 const getParams = getUrlArgObject();
 const path = "getGoodsDetail";
@@ -171,7 +172,7 @@ export default class InfoPage extends React.Component {
           </div>
           <div className="infoContent">
             <span className="infoTitle">
-              {this.state.data.goodsFullName}
+              {this.state.data.goodsName}
             </span>
             <span className="infoC">
               {this.state.data.goodsDesc}
@@ -220,9 +221,14 @@ export default class InfoPage extends React.Component {
           </div>
           <img src={require("../assets/img/jt.png")} alt="" />
         </div>
+
+        <Sku skuName={this.state.data.goodsName} goodsSkuId={this.state.data.goodsSkuId} skuMap={this.state.data.skuMap} sku={this.state.data.sku}></Sku>
       </div>
     );
   }
 }
 
 
+
+
+// https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx553c22c6bc573828&redirect_uri=http%3A%2F%2Fjm.jimigo.com.cn&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect

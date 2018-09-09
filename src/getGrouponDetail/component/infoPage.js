@@ -4,7 +4,8 @@ import { getGrouponDetail,GetWxConfig} from '../api/apiFn';
 import API from '../../common/api/api';
 import open from '../../common/api/open';
 import getUrlArgObject from '../../common/api/getUrlArgObject';
-
+import moment from "moment";
+import {strTime} from "../../common/tool/tool"
 
 const getParams = getUrlArgObject();
 const path = "getGrouponDetail";
@@ -133,6 +134,9 @@ export default class InfoPage extends React.Component {
     })
   }
 
+
+
+
   render() {
     var num = 0;
     var nowTime = true;
@@ -241,7 +245,8 @@ export default class InfoPage extends React.Component {
                 return (
                   <li key={index}>
                     <div className="lf">
-                      <img src={API.imgPath + val.userPic} alt="" />
+                    {val.userPic?<img src={API.imgPath + val.userPic} alt="" />:<img src={require("../../common/assets/img/de.jpg")} alt="" />}
+                      
                       <span className="name">{val.nickName}</span>
                     </div>
                     <div className="rbtn redBtn">
@@ -249,7 +254,7 @@ export default class InfoPage extends React.Component {
                     </div>
                     <div className="rText">
                       <span className="title">还差{this.state.data.memberCount - val.joinCount}人拼成</span>
-                      <span className="time">剩余{val.serverDateTime - val.expireDateTime}</span>
+                      <span className="time">剩余{val.serverDateTime?strTime(val.serverDateTime - val.expireDateTime):""}</span>
                     </div>
                   </li>
                 )

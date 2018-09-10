@@ -38,8 +38,11 @@ const API = {
     getReserveGoodsDetail:APIURL+"/rest/v1/classify/getReserveGoodsDetail",
     getUserEnshrineList:APIURL+"/rest/v1/userEnshrine/getUserEnshrineList",
     getDiscoverDetail:APIURL+"/rest/v1/discover/getDiscoverDetail",
+    sendMobileCode:APIURL+"/rest/v1/userRest/sendMobileCode",
+    regUser:APIURL+"/rest/v1/userRest/regUser",
+    userLogin:APIURL+"/rest/v1/userRest/userLogin",
     myIfno:APIURL+"/rest/v1/userRest/getBaseUserById",
-    downloadUrl:APIURL+"/rest/v1/app/getLastAppVersion"
+    downloadUrl:APIURL+"/rest/v1/app/getLastAppVersion",
 }
 console.log("接口列表：",API)
 

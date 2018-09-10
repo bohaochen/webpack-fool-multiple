@@ -1,7 +1,7 @@
 import React from "react";
 import { Carousel, WingBlank, Icon, Button } from "antd-mobile";
 import "./Sku.less";
-// import API from 'common/api/api';
+import API from 'common/api/api';
 
 export default class Sku extends React.Component {
   constructor() {
@@ -111,7 +111,7 @@ export default class Sku extends React.Component {
               <Icon type="cross" />
             </div>
             <div className="cont">
-              <img src={this.props.skugoodsPic!=""?this.props.skugoodsPic:require("../../assets/img/de.jpg")} alt="" />
+              <img src={this.props.skugoodsPic!=""?API.imgPath+this.props.skugoodsPic:require("../../assets/img/de.jpg")} alt="" />
               <div className="text">
                 <span className="blackPrice">￥288</span>
                 <span className="redPrice">会员价￥258.99</span>

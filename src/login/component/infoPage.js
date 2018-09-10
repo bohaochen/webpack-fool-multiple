@@ -1,7 +1,7 @@
 import React from "react";
 import { Route } from "react-router-dom";
 import { Toast, List, InputItem } from "antd-mobile";
-import { GetWxConfig } from "../../common/api/apiFn";
+import { GetWxConfig, sendMobileCode, regUser, userLogin } from "../../common/api/apiFn";
 import open from "../../common/api/open";
 import API from "../../common/api/api";
 import getUrlArgObject from "../../common/api/getUrlArgObject";
@@ -56,11 +56,16 @@ export default class InfoPage extends React.Component {
 
   componentWillMount() {
     var _this = this;
-    // var data = GetMyInfo(getParams.userId,getParams.optUserId ,getParams.tokenId ,function (data) {
-    //   _this.setState({
-    //     data:data.returnValue,
-    //   })
-    // })
+    console.log(this.props.match.params.type)
+    if (this.props.match.params.type == "signIn") {
+      this.setState({
+        active: 1
+      })
+    } else if (this.props.match.params.type != "signUp") {
+      this.setState({
+        YQM: this.props.match.params.type
+      })
+    }
   }
 
   componentDidMount() {
@@ -142,8 +147,10 @@ export default class InfoPage extends React.Component {
             hasErrorPhone: false
           });
         }
+        console.log(value.replace(/(^\s*)|(\s*$)/g, ""))
+
         this.setState({
-          phone: value
+          phone: value.replace(/(^\s*)|(\s*$)/g, "")
         }, () => {
           this.canSignUpFn();
         });
@@ -165,15 +172,9 @@ export default class InfoPage extends React.Component {
         });
         break;
       case "YQM":
-        if (value.replace(/\s/g, "").length < 5) {
-          this.setState({
-            hasErrorYQM: true
-          });
-        } else {
-          this.setState({
-            hasErrorYQM: false
-          });
-        }
+        this.setState({
+          hasErrorYQM: false
+        });
         this.setState({
           YQM: value
         }, () => {
@@ -200,7 +201,7 @@ export default class InfoPage extends React.Component {
     }
   }
 
-  getCode = () => {
+  getCode = async () => {
     //发送验证码
     if (canSend) {
       canSend = false;
@@ -222,6 +223,12 @@ export default class InfoPage extends React.Component {
           }
         }, 1000)
       })
+
+      sendMobileCode(this.state.phone, (data) => {
+        if (data.errorCode == 0) {
+          Toast.info("发送成功");
+        }
+      })
     }
   }
 
@@ -232,22 +239,54 @@ export default class InfoPage extends React.Component {
       this.setState({
         canSignUp: !this.state.canSignUp
       })
+
+      regUser(this.state.YZM, this.state.YQM, this.state.phone, (data) => {
+        if (data.errorCode == 0) {
+          Toast.info("注册成功");
+        } else {
+          Toast.info(data.errorMsg);
+        }
+      })
+
+      if (this.props.match.params.type == "signUp" || this.props.match.params.type == "signIn") {
+        setTimeout(() => {
+          this.props.history.push("/onlyCode")
+        })
+      }
+
+    }
+  }
+
+  signIn = () => {
+    //登录
+    console.log(11111111111)
+    if (this.state.canSignUp) {
+      this.setState({
+        canSignUp: !this.state.canSignUp
+      })
       Toast.info("提示演示");
 
-      setTimeout(()=>{
+      setTimeout(() => {
         this.props.history.push("/onlyCode")
       })
     }
   }
 
   render() {
+
     return (
       <div className="invite-page">
-        <img
-          className="w_100"
-          src={require("../../common/assets/img/loginBg.png")}
-          alt=""
-        />
+        {
+          this.props.match.params.type != "signUp" && this.props.match.params.type != "signIn" ?
+            <img
+              className="w_100"
+              src={require("../../common/assets/img/loginBg.png")}
+              alt=""
+            />
+            :
+            ""
+        }
+
         <span className="red_title">欢迎加入Jimigo</span>
 
         <div className="selectTabsBox">
@@ -262,7 +301,8 @@ export default class InfoPage extends React.Component {
           <div className="regBox">
             <List>
               <InputItem
-                type="phone"
+                type="num"
+                maxLength="11"
                 placeholder="请输入手机号码"
                 error={this.state.hasErrorPhone}
                 onErrorClick={this.onErrorClick}
@@ -285,20 +325,20 @@ export default class InfoPage extends React.Component {
               />
               <div className={this.state.sendText == "获取验证码" ? "getYZM " : "getYZM cantGet"} onClick={this.getCode}>{this.state.sendText}</div>
             </List>
-            
+
             {
               this.state.active == 0 ?
                 <div>
                   <List>
-              <InputItem
-                type="text"
-                placeholder="请输入推荐码"
-                error={this.state.hasErrorYQM}
-                onErrorClick={this.onErrorClick}
-                onChange={this.onChange.bind(this, "YQM")}
-                value={this.state.YQM}
-              />
-            </List>
+                    <InputItem
+                      type="text"
+                      placeholder="请输入推荐码"
+                      error={this.state.hasErrorYQM}
+                      onErrorClick={this.onErrorClick}
+                      onChange={this.onChange.bind(this, "YQM")}
+                      value={this.state.YQM}
+                    />
+                  </List>
                   <div className="redBtn">
                     <div className={(!this.state.canSignUp ? "styleRedCant " : "") + "styleRed m_25_17"} onClick={this.signUp}>
                       注册
@@ -309,11 +349,11 @@ export default class InfoPage extends React.Component {
                   </div>
                 </div>
                 :
-  <div className="redBtn" style={{marginBottom:"43px"}}>
-                    <div className={(!this.state.canSignUp ? "styleRedCant " : "") + "styleRed m_25_17"} onClick={this.signUp}>
-                      登录
+                <div className="redBtn" style={{ marginBottom: "43px" }}>
+                  <div className={(!this.state.canSignUp ? "styleRedCant " : "") + "styleRed m_25_17"} onClick={this.signIn}>
+                    登录
                     </div>
-                  </div>
+                </div>
 
             }
           </div>

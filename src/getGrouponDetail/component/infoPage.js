@@ -4,7 +4,6 @@ import { getGrouponDetail,GetWxConfig} from '../api/apiFn';
 import API from '../../common/api/api';
 import open from '../../common/api/open';
 import getUrlArgObject from '../../common/api/getUrlArgObject';
-import moment from "moment";
 import {strTime} from "../../common/tool/tool"
 
 const getParams = getUrlArgObject();

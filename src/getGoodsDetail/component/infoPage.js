@@ -42,7 +42,7 @@ export default class InfoPage extends React.Component {
 
   componentWillMount() {
     var _this = this;
-    var data = GetCardInfo(getParams.goodsId, getParams.userId, function (data) {
+    var data = GetCardInfo(getParams.goodsId, getParams.userId, getParams.goodsSkuId,function (data) {
       console.log(data)
       var imgArr = [];
       var infoImgArr = [];
@@ -222,7 +222,7 @@ export default class InfoPage extends React.Component {
           <img src={require("../assets/img/jt.png")} alt="" />
         </div>
 
-        <Sku skuName={this.state.data.goodsName} goodsSkuId={this.state.data.goodsSkuId} skuMap={this.state.data.skuMap} sku={this.state.data.sku}></Sku>
+        <Sku skugoodsPic={this.state.data.goodsPic} skuName={this.state.data.goodsName} goodsSkuId={this.state.data.goodsSkuId} skuMap={this.state.data.skuMap} sku={this.state.data.sku}></Sku>
       </div>
     );
   }

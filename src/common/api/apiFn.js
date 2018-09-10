@@ -2,13 +2,14 @@ import API from './api';
 import AXIOS from 'axios';
 
 
-export const GetCardInfo = (goodsId,userId,callback)=>{
+export const GetCardInfo = (goodsId,userId,goodsSkuId,callback)=>{
     AXIOS.post(API.cardInfo,{
           "apiKey": API.apiKey,
           "timestamp": API.timestamp,
           "bizContent": {
           "goodsId": goodsId,
-          "userId": userId
+          "userId": userId,
+          "goodsSkuId":goodsSkuId
           },
           "sign": API.apiKey
     }).then(function(res){

@@ -34,6 +34,12 @@
         "moduleName": "babel-runtime"
       }
     ],
+    ["module-resolver", {
+      "root": ["./src"],
+      "alias": {
+        "common": "./src/common"
+      }
+    }],
     [
       "import",
       {

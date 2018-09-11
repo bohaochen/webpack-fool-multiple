@@ -45,7 +45,7 @@ class APP extends React.Component {
     return (
       <Router>
         <div style={{width:"100%",height:"100%"}}>
-          <Route path="/signUp/:type" component={InfoPage} />
+          <Route path="/sign/:type" component={InfoPage} />
           <Route path="/onlyCode" component={onlyCode} />
           <Route path="/jkList" component={jkList} />
         </div>

@@ -1,109 +1,165 @@
 import React from "react";
-import { Carousel, WingBlank, Icon, Button } from "antd-mobile";
+import { Carousel, WingBlank, Icon, Toast } from "antd-mobile";
 import "./Sku.less";
-import API from 'common/api/api';
+import API from "common/api/api";
+import { directOrder } from "common/api/apiFn";
+// import Order from "common/component/order/order";
 
 export default class Sku extends React.Component {
   constructor() {
     super();
   }
 
-  state = {
-    skuImg: "",
-    skuTitle: "",
-    skuPrice: "",
-    payPrice: "",
-    skuType: {},
-    skuNum: "",
-    show: true,
-    canClick: false,
-    num: 1,
-    skuIds: "",
-    SelectIDs: [],
-    skuObj: {},
-    skuMap:"",//反向的props.skuMap
-  };
-  closeFn = () => {
-    console.log(0);
-    document.body.style.overflow = "auto";
-    this.setState({
-      show: false
-    });
-  };
+  // state = {
+  //   skuImg: "",
+  //   skuTitle: "",
+  //   skuPrice: "",
+  //   payPrice: "",
+  //   skuType: {},
+  //   skuNum: "",
+  //   canClick: false,
+  //   canSend: false,
+  //   showOrder: false,
+  //   num: 1,
+  //   skuIds: "",
+  //   SelectIDs: [],
+  //   skuObj: {},
+  //   show: false,
+  //   maxIndex: 0, //最大的层级
+  //   skuMap: "", //反向的props.skuMap
+  //   goodsSkuId: "", //最终SKUId
+  //   goodsSkuFullName: "" //SKU商品名
+  // };
+  // closeFn = () => {
+  //   document.body.style.overflow = "auto";
+  //   this.props.closeFn();
+  // };
 
-  componentDidMount() {
-    document.body.style.overflow = "hidden";
-  }
+  // componentDidMount() {
+  //   alert(1)
+  // }
 
-  setNum = type => {
-    if (type == "up") {
-      this.setState({
-        num: (this.state.num += 1),
-        canClick: true
-      });
-    } else {
-      if (this.state.num == 1) {
-        this.setState({
-          canClick: false
-        });
-        return;
-      } else {
-        this.setState({
-          num: (this.state.num -= 1)
-        });
-      }
-    }
-  };
+  // closeOrderFn = () => {
+  //   this.setState({
+  //     showOrder: false
+  //   });
+  // };
 
-  choseSkuId = (index, id) => {
-    var arr = this.state.SelectIDs;
-    var newArr=[];
-    arr[index] = id;
+  // setNum = type => {
+  //   if (type == "up") {
+  //     this.setState({
+  //       num: (this.state.num += 1),
+  //       canClick: true
+  //     });
+  //   } else {
+  //     if (this.state.num == 1) {
+  //       this.setState({
+  //         canClick: false
+  //       });
+  //       return;
+  //     } else {
+  //       this.setState({
+  //         num: (this.state.num -= 1)
+  //       });
+  //     }
+  //   }
+  // };
 
-    console.log(index,id,arr[index])
-    for(var i=0;i<=index;i++){
-        console.log(11111111)
-        newArr.push(arr[i]);
-    }
-    console.log(newArr)
+  // choseSkuId = (index, id) => {
+  //   var arr = this.state.SelectIDs;
+  //   var newArr = [];
+  //   var canSend = false;
+  //   arr[index] = id;
 
-    this.setState(
-      {
-        SelectIDs: newArr
-      },
-      () => {
-        console.log("SelectIDs", this.state.SelectIDs);
-      }
-    );
-  };
+  //   for (var i = 0; i <= index; i++) {
+  //     newArr.push(arr[i]);
+  //   }
+  //   console.log(this.state.maxIndex);
 
-  componentWillReceiveProps(nextProps) {
-    if (this.props.sku != nextProps.sku) {
-      //处理SKU对象
-      var skuObj = {};
-      var newSkuMap = {};
-      nextProps.sku.map((val1, index) => {
-        var valArr = val1.itemIds.split("-");
-        if(valArr[0]==107&&valArr[1]==111){
-        }else{
-            skuObj[valArr] = val1;
-        }
-        // skuObj[valArr] = val1;
+  //   if (index == this.state.maxIndex - 1) {
+  //     canSend = true;
+  //   }
 
-      });
-      newSkuMap=nextProps.skuMap.reverse();
-      this.setState({
-        skuObj: skuObj,
-        skuMap:newSkuMap
-      });
-      console.log("skuObj", skuObj);
-    }
-  }
+  //   this.setState({
+  //     SelectIDs: newArr,
+  //     goodsSkuId: this.state.skuObj[newArr].goodsSkuId,
+  //     goodsSkuFullName: this.state.skuObj[newArr].goodsSkuFullName,
+  //     canSend: canSend
+  //   });
+  // };
+
+  // inputOrder = () => {
+  //   //提交到订单
+  //   console.log(
+  //     this.state.num,
+  //     this.state.goodsSkuId,
+  //     this.props.skuMap[0].goodsId,
+  //     window.localStorage.userId
+  //   );
+  //   if (!this.state.canSend) {
+  //     return;
+  //   }
+  //   directOrder(
+  //     this.state.num,
+  //     this.state.goodsSkuId,
+  //     this.props.skuMap[0].goodsId,
+  //     window.localStorage.userId,
+  //     data => {
+  //       if (data.errorCode == 0) {
+  //         this.setState({
+  //           showOrder: true
+  //         });
+  //       } else {
+  //         Toast.info(data.errorMsg);
+  //       }
+  //     }
+  //   );
+  // };
+
+  // componentWillReceiveProps(nextProps) {
+  //   if (this.props.sku != nextProps.sku) {
+  //     //处理SKU对象
+  //     var skuObj = {};
+  //     var newSkuMap = {};
+  //     var maxIndex = 0;
+  //     nextProps.sku.map((val1, index) => {
+  //       var valArr = val1.itemIds.split("-");
+  //       if (valArr[0] == 107 && valArr[1] == 111) {
+  //       } else {
+  //         skuObj[valArr] = val1;
+  //       }
+  //       if (maxIndex < valArr.length) {
+  //         maxIndex = valArr.length;
+  //       }
+  //       // skuObj[valArr] = val1;
+  //     });
+  //     newSkuMap = nextProps.skuMap.reverse();
+  //     this.setState({
+  //       skuObj: skuObj,
+  //       skuMap: newSkuMap,
+  //       maxIndex: maxIndex
+  //     });
+  //   }
+
+  //   if (this.props.isShow != nextProps.isShow) {
+  //     if (nextProps.isShow) {
+  //       document.body.style.overflow = "hidden";
+  //     }
+  //     this.setState({
+  //       show: nextProps.isShow
+  //     });
+  //   }
+  // }
 
   render() {
+    return(
+      <div>1111111</div>
+    )
     const { show } = this.state;
+
     return (
-      <div className="sku_page" style={{ display: show ? "block" : "none" }}>
+      // <div className="sku_page" style={{ display: show ? "block" : "block" }}>
+      <div className="sku_page" style={{ display: "block"}}>
         <div className="sku_box_bg" />
         <div className="sku_con_box">
           <div className="sku_title_box">
@@ -111,11 +167,22 @@ export default class Sku extends React.Component {
               <Icon type="cross" />
             </div>
             <div className="cont">
-              <img src={this.props.skugoodsPic!=""?API.imgPath+this.props.skugoodsPic:require("../../assets/img/de.jpg")} alt="" />
+              <img
+                src={
+                  this.props.skugoodsPic != ""
+                    ? API.imgPath + this.props.skugoodsPic
+                    : require("../../assets/img/de.jpg")
+                }
+                alt=""
+              />
               <div className="text">
                 <span className="blackPrice">￥288</span>
                 <span className="redPrice">会员价￥258.99</span>
-                <div className="info_text">{this.props.skuName}</div>
+                <div className="info_text">
+                  {this.state.goodsSkuFullName != ""
+                    ? this.state.goodsSkuFullName
+                    : this.props.skuName}
+                </div>
               </div>
             </div>
           </div>
@@ -138,20 +205,15 @@ export default class Sku extends React.Component {
                           //如果当前层级小于已选层级，或者仅仅超过一层，则筛选可选ID,
 
                           for (var i = 0; i < index; i++) {
-                              if(this.state.SelectIDs[i]!=undefined){
-                                parentID.push(this.state.SelectIDs[i]);
-                              }
+                            if (this.state.SelectIDs[i] != undefined) {
+                              parentID.push(this.state.SelectIDs[i]);
+                            }
                           }
-                          parentID.push(ival.itemId)
-                          console.log(ival.itemId+"--parentID",parentID)
-                        //   console.log("this.state.skuObj[parentID]",this.state.skuObj[parentID])
-                          if(this.state.skuObj[parentID]!=undefined){
-                            console.log(ival.itemName)
-                            canSelect=true
+                          parentID.push(ival.itemId);
+                          if (this.state.skuObj[parentID] != undefined) {
+                            canSelect = true;
                           }
-                
                         }
-                   
 
                         return (
                           <span
@@ -196,9 +258,15 @@ export default class Sku extends React.Component {
               </div>
             </div>
 
-            <div className="redBtn">确定</div>
+            <div
+              className={this.state.canSend ? "redBtn" : "redBtn cantC"}
+              onClick={this.inputOrder}
+            >
+              确定
+            </div>
           </div>
         </div>
+        {/* <Order isShow={this.state.showOrder} closeFn={this.closeOrderFn} /> */}
       </div>
     );
   }

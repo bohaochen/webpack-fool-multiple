@@ -1,15 +1,20 @@
 import React from "react";
 import { Route } from "react-router-dom";
 import { Toast, List, InputItem } from "antd-mobile";
-import { GetWxConfig, sendMobileCode, regUser, userLogin } from "../../common/api/apiFn";
+import {
+  GetWxConfig,
+  sendMobileCode,
+  regUser,
+  userLogin,
+  getBaseUserById
+} from "../../common/api/apiFn";
 import open from "../../common/api/open";
 import API from "../../common/api/api";
 import getUrlArgObject from "../../common/api/getUrlArgObject";
+import qs from "qs";
+
 const getParams = getUrlArgObject();
 const path = "regUser";
-
-var headImg = API.imgPath + decodeURI(getParams.userPic);
-var name = decodeURI(getParams.nickName);
 var invitationCode = decodeURI(getParams.invitationCode);
 
 var setIntervalCode = "";
@@ -56,15 +61,15 @@ export default class InfoPage extends React.Component {
 
   componentWillMount() {
     var _this = this;
-    console.log(this.props.match.params.type)
+    console.log(this.props.match.params.type);
     if (this.props.match.params.type == "signIn") {
       this.setState({
         active: 1
-      })
+      });
     } else if (this.props.match.params.type != "signUp") {
       this.setState({
         YQM: this.props.match.params.type
-      })
+      });
     }
   }
 
@@ -72,7 +77,7 @@ export default class InfoPage extends React.Component {
     //转发到朋友圈
     document.title = "注册";
     const debug = NODE_ENV == "development" ? 0 : 1;
-    var data = GetWxConfig(debug, function (data) {
+    var data = GetWxConfig(debug, function(data) {
       //
       wx.config({
         debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来
@@ -82,17 +87,17 @@ export default class InfoPage extends React.Component {
         signature: data.returnValue.signature, // 必填，签名，见附录1
         jsApiList: data.returnValue.jsApiList
       });
-      wx.ready(function () {
+      wx.ready(function() {
         // config信息验证后会执行ready方法，所有接口调用都必须在config接口获得结果之后，config是一个客户端的异步操作，所以如果需要在页面加载时就调用相关接口，
         //则须把相关接口放在ready函数中调用来确保正确执行。对于用户触发时才调用的接口，则可以直接调用，不需要放在ready函数中。
         wx.onMenuShareTimeline({
           title: "好友邀请您开启jimigo之路",
           link: window.location.href,
           imgUrl: "http://jm.jimigo.com.cn/app/jimigo-logo.png",
-          success: function () {
+          success: function() {
             console.log("分享成功");
           },
-          cancel: function () {
+          cancel: function() {
             console.log("分享失败");
           }
         });
@@ -108,10 +113,10 @@ export default class InfoPage extends React.Component {
           imgUrl: "http://jm.jimigo.com.cn/app/jimigo-logo.png",
           type: "link",
           dataUrl: "",
-          success: function () {
+          success: function() {
             console.log("分享成功");
           },
-          cancel: function () {
+          cancel: function() {
             console.log("分享失败");
           }
         });
@@ -125,7 +130,7 @@ export default class InfoPage extends React.Component {
     });
   };
 
-  sendYZM = () => { };
+  sendYZM = () => {};
 
   onErrorClick = () => {
     if (this.state.hasErrorPhone) {
@@ -135,7 +140,14 @@ export default class InfoPage extends React.Component {
     }
   };
   onChange = (type, value) => {
-    var { hasErrorPhone, hasErrorYZM, hasErrorYQM, phone, YZM, YQM } = this.state
+    var {
+      hasErrorPhone,
+      hasErrorYZM,
+      hasErrorYQM,
+      phone,
+      YZM,
+      YQM
+    } = this.state;
     switch (type) {
       case "phone":
         if (value.replace(/\s/g, "").length < 11) {
@@ -147,13 +159,16 @@ export default class InfoPage extends React.Component {
             hasErrorPhone: false
           });
         }
-        console.log(value.replace(/(^\s*)|(\s*$)/g, ""))
+        console.log(value.replace(/(^\s*)|(\s*$)/g, ""));
 
-        this.setState({
-          phone: value.replace(/(^\s*)|(\s*$)/g, "")
-        }, () => {
-          this.canSignUpFn();
-        });
+        this.setState(
+          {
+            phone: value.replace(/(^\s*)|(\s*$)/g, "")
+          },
+          () => {
+            this.canSignUpFn();
+          }
+        );
         break;
       case "YZM":
         if (value.replace(/\s/g, "").length < 6) {
@@ -165,21 +180,27 @@ export default class InfoPage extends React.Component {
             hasErrorYZM: false
           });
         }
-        this.setState({
-          YZM: value
-        }, () => {
-          this.canSignUpFn();
-        });
+        this.setState(
+          {
+            YZM: value
+          },
+          () => {
+            this.canSignUpFn();
+          }
+        );
         break;
       case "YQM":
         this.setState({
           hasErrorYQM: false
         });
-        this.setState({
-          YQM: value
-        }, () => {
-          this.canSignUpFn();
-        });
+        this.setState(
+          {
+            YQM: value
+          },
+          () => {
+            this.canSignUpFn();
+          }
+        );
         break;
       default:
         break;
@@ -187,105 +208,161 @@ export default class InfoPage extends React.Component {
   };
 
   canSignUpFn = () => {
-    var { hasErrorPhone, hasErrorYZM, hasErrorYQM, phone, YZM, YQM } = this.state
+    var {
+      hasErrorPhone,
+      hasErrorYZM,
+      hasErrorYQM,
+      phone,
+      YZM,
+      YQM
+    } = this.state;
 
-    if (!hasErrorPhone && !hasErrorYZM && !hasErrorYQM && phone.length > 0 && YZM.length > 0 && YQM.length > 0) {
+    if (
+      !hasErrorPhone &&
+      !hasErrorYZM &&
+      !hasErrorYQM &&
+      phone.length > 0 &&
+      YZM.length > 0
+    ) {
       //判定是否可以点击注册按钮
       this.setState({
         canSignUp: true
-      })
+      });
     } else {
       this.setState({
         canSignUp: false
-      })
+      });
     }
-  }
+  };
 
   getCode = async () => {
     //发送验证码
     if (canSend) {
       canSend = false;
       var num = 59;
-      this.setState({
-        sendText: 60 + "s"
-      }, () => {
-        setIntervalCode = setInterval(() => {
-          if (num == 0) {
-            this.setState({
-              sendText: "获取验证码"
-            })
-            canSend = true;
-            clearInterval(setIntervalCode)
-          } else {
-            this.setState({
-              sendText: (num -= 1) + "s"
-            })
-          }
-        }, 1000)
-      })
+      this.setState(
+        {
+          sendText: 60 + "s"
+        },
+        () => {
+          setIntervalCode = setInterval(() => {
+            if (num == 0) {
+              this.setState({
+                sendText: "获取验证码"
+              });
+              canSend = true;
+              clearInterval(setIntervalCode);
+            } else {
+              this.setState({
+                sendText: (num -= 1) + "s"
+              });
+            }
+          }, 1000);
+        }
+      );
 
-      sendMobileCode(this.state.phone, (data) => {
+      sendMobileCode(this.state.phone, data => {
         if (data.errorCode == 0) {
           Toast.info("发送成功");
         }
-      })
+      });
     }
-  }
+  };
 
   signUp = () => {
     //注册
-    console.log(11111111111)
     if (this.state.canSignUp) {
       this.setState({
         canSignUp: !this.state.canSignUp
-      })
+      });
 
-      regUser(this.state.YZM, this.state.YQM, this.state.phone, (data) => {
+      regUser(this.state.YZM, this.state.YQM, this.state.phone, data => {
         if (data.errorCode == 0) {
           Toast.info("注册成功");
         } else {
           Toast.info(data.errorMsg);
+          this.setState({
+            YZM: ""
+          });
         }
-      })
-
-      if (this.props.match.params.type == "signUp" || this.props.match.params.type == "signIn") {
-        setTimeout(() => {
-          this.props.history.push("/onlyCode")
-        })
-      }
-
+      });
     }
-  }
+  };
 
   signIn = () => {
     //登录
-    console.log(11111111111)
+    var redirect_uri = qs.parse(window.location.href.split("?")[1]);
     if (this.state.canSignUp) {
       this.setState({
         canSignUp: !this.state.canSignUp
-      })
+      });
       Toast.info("提示演示");
+      userLogin(this.state.YZM, this.state.phone, data => {
+        if (data.errorCode == 0) {
+          Toast.info("登录成功");
+          window.localStorage["userId"] = data.returnValue.userId;
+          window.localStorage["tokenId"] = data.returnValue.tokenId;
+          window.localStorage["nickName"] = data.returnValue.nickName;
+          window.localStorage["userPic"] = data.returnValue.userPic;
+          window.localStorage["userMobile"] = data.returnValue.userMobile;
 
-      setTimeout(() => {
-        this.props.history.push("/onlyCode")
-      })
+          getBaseUserById(
+            data.returnValue.userId,
+            data.returnValue.tokenId,
+            data => {
+              console.log(data);
+              if (data.errorCode == 0) {
+                window.localStorage["invitationCode"] =
+                  data.returnValue.invitationCode;
+                window.localStorage["myInvitationCode"] =
+                  data.returnValue.myInvitationCode;
+
+
+                  if (
+                    (this.props.match.params.type == "signUp" ||
+                      this.props.match.params.type == "signIn") &&
+                    this.state.active == 1&&
+                    data.returnValue.invitationCode==""
+                  ) {
+                    setTimeout(() => {
+                      this.props.history.push(
+                        "/onlyCode" + "?redirect_uri=" + redirect_uri
+                      );
+                    }, 500);
+                  }else{
+                    window.location.href=redirect_uri
+                  }
+
+              } else {
+                Toast.info(data.errorMsg);
+              }
+
+              
+            }
+          );
+        } else {
+          Toast.info(data.errorMsg);
+          this.setState({
+            YZM: ""
+          });
+        }
+      });
     }
-  }
+  };
 
   render() {
-
     return (
       <div className="invite-page">
-        {
-          this.props.match.params.type != "signUp" && this.props.match.params.type != "signIn" ?
-            <img
-              className="w_100"
-              src={require("../../common/assets/img/loginBg.png")}
-              alt=""
-            />
-            :
-            ""
-        }
+        {this.props.match.params.type != "signUp" &&
+        this.props.match.params.type != "signIn" ? (
+          <img
+            className="w_100"
+            src={require("../../common/assets/img/loginBg.png")}
+            alt=""
+          />
+        ) : (
+          ""
+        )}
 
         <span className="red_title">欢迎加入Jimigo</span>
 
@@ -323,44 +400,61 @@ export default class InfoPage extends React.Component {
                 onChange={this.onChange.bind(this, "YZM")}
                 value={this.state.YZM}
               />
-              <div className={this.state.sendText == "获取验证码" ? "getYZM " : "getYZM cantGet"} onClick={this.getCode}>{this.state.sendText}</div>
+              <div
+                className={
+                  this.state.sendText == "获取验证码"
+                    ? "getYZM "
+                    : "getYZM cantGet"
+                }
+                onClick={this.getCode}
+              >
+                {this.state.sendText}
+              </div>
             </List>
 
-            {
-              this.state.active == 0 ?
-                <div>
-                  <List>
-                    <InputItem
-                      type="text"
-                      placeholder="请输入推荐码"
-                      error={this.state.hasErrorYQM}
-                      onErrorClick={this.onErrorClick}
-                      onChange={this.onChange.bind(this, "YQM")}
-                      value={this.state.YQM}
-                    />
-                  </List>
-                  <div className="redBtn">
-                    <div className={(!this.state.canSignUp ? "styleRedCant " : "") + "styleRed m_25_17"} onClick={this.signUp}>
-                      注册
-                    </div>
-                  </div>
-                  <div className="readMe">
-                    点击注册代表您已阅读并同意<span>《用户使用协议》</span>
+            {this.state.active == 0 ? (
+              <div>
+                <List>
+                  <InputItem
+                    type="text"
+                    placeholder="请输入推荐码"
+                    error={this.state.hasErrorYQM}
+                    onErrorClick={this.onErrorClick}
+                    onChange={this.onChange.bind(this, "YQM")}
+                    value={this.state.YQM}
+                  />
+                </List>
+                <div className="redBtn">
+                  <div
+                    className={
+                      (!this.state.canSignUp ? "styleRedCant " : "") +
+                      "styleRed m_25_17"
+                    }
+                    onClick={this.signUp}
+                  >
+                    注册
                   </div>
                 </div>
-                :
-                <div className="redBtn" style={{ marginBottom: "43px" }}>
-                  <div className={(!this.state.canSignUp ? "styleRedCant " : "") + "styleRed m_25_17"} onClick={this.signIn}>
-                    登录
-                    </div>
+                <div className="readMe">
+                  点击注册代表您已阅读并同意
+                  <span>《用户使用协议》</span>
                 </div>
-
-            }
+              </div>
+            ) : (
+              <div className="redBtn" style={{ marginBottom: "43px" }}>
+                <div
+                  className={
+                    (!this.state.canSignUp ? "styleRedCant " : "") +
+                    "styleRed m_25_17"
+                  }
+                  onClick={this.signIn}
+                >
+                  登录
+                </div>
+              </div>
+            )}
           </div>
-
         </div>
-
-
 
         <div
           className="fc"
@@ -377,4 +471,3 @@ export default class InfoPage extends React.Component {
     );
   }
 }
-

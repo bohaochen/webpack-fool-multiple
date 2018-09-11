@@ -1,16 +1,16 @@
 import React from "react";
 import { Route } from "react-router-dom";
 import { Toast, List, InputItem } from "antd-mobile";
-import { GetWxConfig } from "../../common/api/apiFn";
+import { GetWxConfig,addInvitationCode } from "../../common/api/apiFn";
 import open from "../../common/api/open";
 import API from "../../common/api/api";
 import getUrlArgObject from "../../common/api/getUrlArgObject";
 const getParams = getUrlArgObject();
 const path = "regUser";
+import qs from "qs";
 
-var headImg = API.imgPath + decodeURI(getParams.userPic);
-var name = decodeURI(getParams.nickName);
-var invitationCode = decodeURI(getParams.invitationCode);
+
+var redirect_uri = qs.parse(window.location.href.split("?")[1]);
 
 var setIntervalCode = "";
 var canSend = true;
@@ -26,24 +26,11 @@ export default class InfoPage extends React.Component {
     imgHeight: 176,
     active: 0,
     hasErrorPhone: false,
-    hasErrorYZM: false,
-    hasErrorYQM: false,
-    phone: "",
-    YZM: "",
-    YQM: "",
+    InvitationCode: "",
     canSignUp: false,
     sendText: "获取验证码"
   };
 
-  copyUrl = () => {
-    Toast.info("复制成功!", 1);
-    var _this = this;
-    copy(invitationCode, {
-      debug: false,
-      message: "Press #{key} to copy"
-    });
-    console.log("复制成功，如果失败，请在输入框内手动复制.");
-  };
 
   hideFcFn = () => {
     this.setState({
@@ -56,16 +43,11 @@ export default class InfoPage extends React.Component {
 
   componentWillMount() {
     var _this = this;
-    // var data = GetMyInfo(getParams.userId,getParams.optUserId ,getParams.tokenId ,function (data) {
-    //   _this.setState({
-    //     data:data.returnValue,
-    //   })
-    // })
   }
 
   componentDidMount() {
     //转发到朋友圈
-    document.title = "注册";
+    document.title = "填写邀请码";
     const debug = NODE_ENV == "development" ? 0 : 1;
     var data = GetWxConfig(debug, function(data) {
       //
@@ -132,11 +114,7 @@ export default class InfoPage extends React.Component {
   onChange = (type, value) => {
     var {
       hasErrorPhone,
-      hasErrorYZM,
-      hasErrorYQM,
-      phone,
-      YZM,
-      YQM
+      InvitationCode
     } = this.state;
     switch (type) {
       case "phone":
@@ -151,7 +129,7 @@ export default class InfoPage extends React.Component {
         }
         this.setState(
           {
-            phone: value
+            InvitationCode : value
           },
           () => {
             this.canSignUpFn();
@@ -166,12 +144,12 @@ export default class InfoPage extends React.Component {
   canSignUpFn = () => {
     var {
       hasErrorPhone,
-      phone,
+      InvitationCode ,
     } = this.state;
 
     if (
       !hasErrorPhone &&
-      phone.length > 0 
+      InvitationCode .length > 0 
     ) {
       //判定是否可以点击注册按钮
       this.setState({
@@ -185,18 +163,23 @@ export default class InfoPage extends React.Component {
   };
 
 
-  signUp = () => {
+  addInvitationCode = () => {
     //注册
-    console.log(11111111111);
     if (this.state.canSignUp) {
       this.setState({
         canSignUp: !this.state.canSignUp
       });
-      Toast.info("提示演示");
-      setTimeout(()=>{
-        this.props.history.push("/1")
-        console.log( this.props.match)
-      },1000)
+      addInvitationCode(window.localStorage.userId,this.state.InvitationCode ,(data)=>{
+        if (data.errorCode == 0) {
+          Toast.info("操作成功");
+          setTimeout(()=>{
+            window.location.href=redirect_uri
+          },1000)
+        } else {
+          Toast.info(data.errorMsg);
+        }
+      })
+      
     }
   };
 
@@ -213,7 +196,7 @@ export default class InfoPage extends React.Component {
                 error={this.state.hasErrorPhone}
                 onErrorClick={this.onErrorClick}
                 onChange={this.onChange.bind(this, "phone")}
-                value={this.state.phone}
+                value={this.state.InvitationCode }
                 style={{paddingLeft:"12px"}}
               >
               推荐码
@@ -227,7 +210,7 @@ export default class InfoPage extends React.Component {
                   (!this.state.canSignUp ? "styleRedCant " : "") +
                   "styleRed m_25_17"
                 }
-                onClick={this.signUp}
+                onClick={this.addInvitationCode}
               >
                 确定
               </div>

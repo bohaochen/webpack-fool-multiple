@@ -200,15 +200,74 @@ export const regUser = (mobileCode, invitationCode, userMobile, callback) => {
     })
 }
 
-export const userLogin = (password, userMobile, callback) => {
+export const userLogin = (password, userName, callback) => {
     //登录
-    AXIOS.post(API.regUser, {
-        "apiKey": API.userLogin,
+    AXIOS.post(API.userLogin, {
+        "apiKey": API.apiKey,
         "timestamp": API.timestamp,
         "bizContent": {
-            "userMobile": userMobile,
+            "userName": userName,
             "loginType": 1,
             "password": password //验证码
+        },
+        "sign": API.apiKey
+    }).then(function (res) {
+        console.log(res)
+        callback(res.data)
+    }).catch(function (err) {
+        console.log(err)
+    })
+}
+
+
+
+export const addInvitationCode = (userId, invitationCode, callback) => {
+    //填写邀请码
+    AXIOS.post(API.addInvitationCode, {
+        "apiKey": API.apiKey,
+        "timestamp": API.timestamp,
+        "bizContent": {
+            "userId": userId,
+	    	"invitationCode":invitationCode
+        },
+        "sign": API.apiKey
+    }).then(function (res) {
+        console.log(res)
+        callback(res.data)
+    }).catch(function (err) {
+        console.log(err)
+    })
+}
+
+export const getBaseUserById = (userId, tokenId, callback) => {
+    //填写邀请码
+    AXIOS.post(API.getBaseUserById, {
+        "apiKey": API.apiKey,
+        "timestamp": API.timestamp,
+        "bizContent": {
+            "optUserId": userId,
+            "userId": userId,
+            "tokenId": tokenId,
+        },
+        "sign": API.apiKey
+    }).then(function (res) {
+        console.log(res)
+        callback(res.data)
+    }).catch(function (err) {
+        console.log(err)
+    })
+}
+
+export const directOrder = (number, goodsSkuId, goodsId, userId,callback) => {
+    //选定SKU下单--普通商品
+    AXIOS.post(API.directOrder, {
+        "apiKey": API.apiKey,
+        "timestamp": API.timestamp,
+        "bizContent": {
+            "number": number,
+            "goodsSkuId": goodsSkuId,
+            "goodsId": goodsId,
+            "userId": userId
         },
         "sign": API.apiKey
     }).then(function (res) {

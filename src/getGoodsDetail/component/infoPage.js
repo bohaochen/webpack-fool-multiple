@@ -3,11 +3,28 @@ import { Carousel, WingBlank, Icon, Button} from "antd-mobile";
 import { GetCardInfo,GetWxConfig } from '../../common/api/apiFn';
 import API from '../../common/api/api';
 import open from '../../common/api/open';
+import {  Route,Link } from "react-router-dom";
+
 import getUrlArgObject from '../../common/api/getUrlArgObject';
-import Sku from '../../common/component/sku/sku'
+import Sku from 'common/component/sku/sku'
 
 const getParams = getUrlArgObject();
 const path = "getGoodsDetail";
+
+
+class asdasd extends React.Component{
+  constructor() {
+    super();
+  }
+
+  render(){
+    return(
+      <div>
+        12321311111111111
+      </div>
+    )
+  }
+}
 
 export default class InfoPage extends React.Component {
   constructor() {
@@ -21,7 +38,8 @@ export default class InfoPage extends React.Component {
     isOver: true,
     isFc: false,
     isScroll: false,
-    imgHeight: 375
+    imgHeight: 375,
+    showSku:false,
   };
 
   gotoTop = () => {
@@ -33,6 +51,20 @@ export default class InfoPage extends React.Component {
   hideFcFn = () => {
     this.setState({
       isFc: false,
+    })
+  }
+
+  showSkuFn=()=>{
+    console.log(0)
+    this.setState({
+      showSku:true
+    })
+  }
+
+  closeSkuFn=()=>{
+      // 关闭SKU盒子
+    this.setState({
+      showSku:false
     })
   }
 
@@ -133,6 +165,7 @@ export default class InfoPage extends React.Component {
   render() {
     return (
       <div className="card-page">
+      <Link to="/abc">11111111</Link>
         <WingBlank>
           <Carousel
             autoplay={false}
@@ -205,7 +238,7 @@ export default class InfoPage extends React.Component {
         <div className="pageFoot">
           <div className={this.state.data.statusCode == 1 ?  "redBtn":"cantClickBtn"}>
             {/* <Button onClick={open.bind(this,path,getParams,this)}  type="primary" disabled={this.state.data.statusCode == 1 ?false: true } className="btncss">立即购买</Button> */}
-            <Button type="primary" disabled={this.state.data.statusCode == 1 ?false: true } className="btncss">立即购买</Button>
+            <Button type="primary" onClick={this.showSkuFn} disabled={this.state.data.statusCode == 1 ?false: true } className="btncss">立即购买</Button>
           </div>
         </div>
         <div className="toastBox" style={{display:this.state.data.statusCode == 2?"block":"none"}}>
@@ -221,8 +254,13 @@ export default class InfoPage extends React.Component {
           </div>
           <img src={require("../assets/img/jt.png")} alt="" />
         </div>
+        {this.props.match.url}
+        <div className="121212121">
+         <Route path={`/abc`} component={asdasd}/>
+        </div>
 
-        <Sku skugoodsPic={this.state.data.goodsPic} skuName={this.state.data.goodsName} goodsSkuId={this.state.data.goodsSkuId} skuMap={this.state.data.skuMap} sku={this.state.data.sku}></Sku>
+        22222222222
+        {/* <Sku isShow={this.state.showSku} closeFn={this.closeSkuFn} skugoodsPic={this.state.data.goodsPic} skuName={this.state.data.goodsName} goodsSkuId={this.state.data.goodsSkuId} skuMap={this.state.data.skuMap} sku={this.state.data.sku}></Sku> */}
       </div>
     );
   }
@@ -231,4 +269,4 @@ export default class InfoPage extends React.Component {
 
 
 
-// https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx553c22c6bc573828&redirect_uri=http%3A%2F%2Fjm.jimigo.com.cn&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect
+// https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx553c22c6bc573828&redirect_uri=http%3A%2F%2Fjm.jimigo.com.cn%3FAsdasdasd%3Daasdasd%26weq&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect

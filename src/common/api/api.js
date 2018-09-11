@@ -41,6 +41,10 @@ const API = {
     sendMobileCode:APIURL+"/rest/v1/userRest/sendMobileCode",
     regUser:APIURL+"/rest/v1/userRest/regUser",
     userLogin:APIURL+"/rest/v1/userRest/userLogin",
+    addInvitationCode:APIURL+"/rest/v1/userRest/addInvitationCode",
+    getBaseUserById:APIURL+"/rest/v1/userRest/getBaseUserById",
+    directOrder:APIURL+"/rest/v1/order/directOrder",//选定SKU下单
+    
     myIfno:APIURL+"/rest/v1/userRest/getBaseUserById",
     downloadUrl:APIURL+"/rest/v1/app/getLastAppVersion",
 }

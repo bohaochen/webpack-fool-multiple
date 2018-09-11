@@ -3,6 +3,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import loadable from "react-loadable";
 import LoadView from "./component/loading"
+import { HashRouter as Router, Route, Link } from "react-router-dom";
 import 'amfe-flexible'
 
 import './assets/css/index.less';
@@ -36,7 +37,15 @@ class APP extends React.Component {
 
   render() {
     return (
-      <InfoPage/>      
+      // <InfoPage/>   
+      
+      <Router>
+      <div style={{width:"100%",height:"100%"}}>
+        <Route path="/" component={InfoPage}
+          >
+        </Route>
+      </div>
+    </Router>
     );
   }
 }

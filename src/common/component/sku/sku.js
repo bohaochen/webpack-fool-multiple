@@ -83,26 +83,19 @@ export default class Sku extends React.Component {
 
   inputOrder = () => {
     //提交到订单
-    console.log(
-      this.state.num,
-      this.state.goodsSkuId,
-      this.props.skuMap[0].goodsId,
-      window.localStorage.userId
-    );
     if (!this.state.canSend) {
       return;
     }
+    var objStr = {
+      num:this.state.num,
+      goodsSkuId:this.state.goodsSkuId,
+      goodsId:this.props.skuMap[0].goodsId,
+      userId:window.localStorage.userId
+  }
+    window.localStorage.orderParams=JSON.stringify(objStr)
 
-    
-    console.log("111111",this.props.history)
-    
     this.props.history.push({
-      pathname : '/order', state :{
-        num:this.state.num,
-        goodsSkuId:this.state.goodsSkuId,
-        goodsId:this.props.skuMap[0].goodsId,
-        userId:window.localStorage.userId
-      }
+      pathname : '/order'
     })
 
   };

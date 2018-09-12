@@ -55,7 +55,6 @@ export default class InfoPage extends React.Component {
   }
 
   showSkuFn=()=>{
-    console.log(0)
     this.setState({
       showSku:true
     })
@@ -63,6 +62,7 @@ export default class InfoPage extends React.Component {
 
   closeSkuFn=()=>{
       // 关闭SKU盒子
+      console.log(0)
     this.setState({
       showSku:false
     })
@@ -163,9 +163,9 @@ export default class InfoPage extends React.Component {
   }
 
   render() {
+    console.log(this.props)
     return (
       <div className="card-page">
-      <Link to="/abc">11111111</Link>
         <WingBlank>
           <Carousel
             autoplay={false}
@@ -254,13 +254,8 @@ export default class InfoPage extends React.Component {
           </div>
           <img src={require("../assets/img/jt.png")} alt="" />
         </div>
-        {this.props.match.url}
-        <div className="121212121">
-         <Route path={`/abc`} component={asdasd}/>
-        </div>
 
-        22222222222
-        {/* <Sku isShow={this.state.showSku} closeFn={this.closeSkuFn} skugoodsPic={this.state.data.goodsPic} skuName={this.state.data.goodsName} goodsSkuId={this.state.data.goodsSkuId} skuMap={this.state.data.skuMap} sku={this.state.data.sku}></Sku> */}
+        <Sku history={this.props.history} isShow={this.state.showSku} closeFn={this.closeSkuFn} skugoodsPic={this.state.data.goodsPic} skuName={this.state.data.goodsName} goodsSkuId={this.state.data.goodsSkuId} skuMap={this.state.data.skuMap} sku={this.state.data.sku}></Sku>
       </div>
     );
   }

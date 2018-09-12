@@ -9,7 +9,6 @@ import 'amfe-flexible'
 import './assets/css/index.less';
 // import './assets/css/index.css';
 
-// import InfoPage from "./component/infoPage";
 const loadingComponent = ({ isLoading, error }) => {
   // Handle the loading state
   if (isLoading) {
@@ -30,6 +29,7 @@ const InfoPage = loadable({
   loading:loadingComponent
 });
 
+
 class APP extends React.Component {
   constructor() {
     super();
@@ -37,8 +37,6 @@ class APP extends React.Component {
 
   render() {
     return (
-      // <InfoPage/>   
-      
       <Router>
       <div style={{width:"100%",height:"100%"}}>
         <Route path="/" component={InfoPage}

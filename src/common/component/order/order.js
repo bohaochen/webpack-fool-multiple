@@ -4,7 +4,7 @@ import "./order.less";
 import API from "common/api/api";
 import { directOrder } from "common/api/apiFn";
 import Card from "common/component/card/card"
-import {Route} from "react-router-dom";
+import { Route } from "react-router-dom";
 
 export default class Roder extends React.Component {
   constructor() {
@@ -13,15 +13,16 @@ export default class Roder extends React.Component {
 
   state = {
     show: false,
+    data: {},
     hasAddress: false,
-    isUseBalance:true,
+    isUseBalance: true,
   };
 
   componentWillMount() {
     var params = JSON.parse(window.localStorage.orderParams);
 
 
-console.log("params",params)
+    console.log("params", params)
 
     directOrder(
       params.num,
@@ -31,7 +32,8 @@ console.log("params",params)
       data => {
         if (data.errorCode == 0) {
           this.setState({
-            showOrder: true
+            showOrder: true,
+            data: data.returnValue
           });
         } else {
           Toast.info(data.errorMsg);
@@ -44,7 +46,7 @@ console.log("params",params)
     document.title = "确认订单";
   }
 
-  componentWillUnmount(){
+  componentWillUnmount() {
   }
 
   componentWillReceiveProps(nextProps) {
@@ -53,10 +55,19 @@ console.log("params",params)
   }
 
   render() {
-    const { show, hasAddress } = this.state;
+    const { show, hasAddress, data } = this.state;
     const Item = List.Item;
     const Brief = Item.Brief;
+    let numFn = () => {
+      var a = 0;
+      if (data.orderItem) {
+        data.orderItem.map((val, index) => {
+          a += val.number
+        })
+        return a;
+      }
 
+    }
     return (
       <div className="order_box">
         <div className="address_box">
@@ -77,60 +88,52 @@ console.log("params",params)
         </div>
 
         <div className="items">
-          <div className="item">
-            <img src={require("common/assets/img/de.jpg")} alt="" />
-            <div className="info_box">
-              <span className="title">
-                澳洲2010原瓶进口奔富酒庄BIN28卡琳娜西拉富酒庄BIN28卡琳娜西拉富酒庄BIN28卡琳娜西拉干红750ml/瓶
-              </span>
-              <div className="info">水蜜桃；标准口味1箱</div>
-              <div className="price_box">
-                <span className="price">￥259.9</span>
-                <span className="num">×10</span>
-              </div>
-            </div>
-          </div>
-
-          <div className="item">
-            <img src={require("common/assets/img/de.jpg")} alt="" />
-            <div className="info_box">
-              <span className="title">
-                澳洲2010原瓶进口奔富酒庄BIN28卡琳娜西拉富酒庄BIN28卡琳娜西拉富酒庄BIN28卡琳娜西拉干红750ml/瓶
-              </span>
-              <div className="info">水蜜桃；标准口味1箱</div>
-              <div className="price_box">
-                <span className="price">￥259.9</span>
-                <span className="num">×10</span>
-              </div>
-            </div>
-          </div>
+          {
+            data.orderItem.map((val, index) => {
+              return (
+                <div className="item" key={index}>
+                  <img src={API.imgPath + val.goodsPic} alt="" />
+                  <div className="info_box">
+                    <span className="title">
+                      {val.goodsName}
+                    </span>
+                    <div className="info">{val.goodsDesc}</div>
+                    <div className="price_box">
+                      <span className="price">￥{val.orderAllotPrice}</span>
+                      <span className="num">×{val.number}</span>
+                    </div>
+                  </div>
+                </div>
+              )
+            })
+          }
         </div>
 
         <div className="set_list">
           <List className="my-list">
-            <Item extra={"extra content"}>吉米豆</Item>
-            <Item extra={"extra content"}>预计返利</Item>
-            <Item extra={"extra content"}>商品金额</Item>
+            <Item extra={"+" + data.jimiBean}>吉米豆</Item>
+            <Item extra={"+￥" + data.decVal1}>预计返利</Item>
+            <Item extra={"￥" + data.amountPrice}>商品金额</Item>
             <Item extra={"满300减50元"} arrow="horizontal" onClick={() => {
-              this.props.history.push(this.props.match.url+"/card")
+              this.props.history.push(this.props.match.url + "/card")
             }}>
               优惠劵
             </Item>
             <Item extra={<Switch
-              onChange={()=>{
-                  this.setState({
-                    isUseBalance:!this.state.isUseBalance
-                  })
+              onChange={() => {
+                this.setState({
+                  isUseBalance: !this.state.isUseBalance
+                })
               }}
               checked={this.state.isUseBalance}
               platform="ios"
               color="#FF2738"
             />}>
-              可用抵扣余额￥25.20
+              可用抵扣余额￥{data.totalCouponsPrice}
             </Item>
 
-            <Item extra={"extra content"}>邮费</Item>
-            <Item extra={"extra content"}>总计</Item>
+            <Item extra={"￥" + data.postPrice}>邮费</Item>
+            <Item extra={"￥" + data.paymentPrice}>总计</Item>
           </List>
         </div>
 
@@ -152,8 +155,10 @@ console.log("params",params)
 
         <div className="pay_btn">
           <div className="pay_info">
-            共111件，总计
-                <span className="price">￥2560.12</span>
+            共{
+              numFn()
+            }件，总计
+                <span className="price">￥{data.paymentPrice}</span>
           </div>
           <div className="redBtn">
             支付订单
@@ -164,3 +169,5 @@ console.log("params",params)
     );
   }
 }
+
+//默认订单地址？ 选优惠卷  选择优惠卷以后 商品价格变化？
